@@ -1,0 +1,19 @@
+{
+  "name": "DBConn",
+  "module": "dbconnector",
+  "action": "connect",
+  "options": {
+    "client": "postgres",
+    "connection": {
+      "host": "db.zqtwnmvlcnrqwxrhnmsh.supabase.co",
+      "port": 5432,
+      "user": "postgres",
+      "password": "08efgcUtauAaqmHf",
+      "database": "postgres",
+      "ssl": {
+        "rejectUnauthorized": false
+      }
+    }
+  },
+  "fileName": "DBConn.json"
+}
