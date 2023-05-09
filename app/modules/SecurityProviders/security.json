@@ -1,0 +1,35 @@
+{
+  "name": "security",
+  "module": "auth",
+  "action": "provider",
+  "options": {
+    "secret": "osslU6Vvi947EY8",
+    "provider": "Database",
+    "connection": "DBConnection",
+    "users": {
+      "table": "m_users",
+      "identity": "id",
+      "username": "user_email",
+      "password": "user_password"
+    },
+    "permissions": {
+      "write": {
+        "table": "m_users",
+        "identity": "id",
+        "conditions": [
+          {
+            "column": "status",
+            "operator": "=",
+            "value": "1"
+          }
+        ]
+      }
+    }
+  },
+  "meta": [
+    {
+      "name": "identity",
+      "type": "text"
+    }
+  ]
+}

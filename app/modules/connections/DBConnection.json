@@ -1,0 +1,22 @@
+{
+  "name": "DBConnection",
+  "module": "dbconnector",
+  "action": "connect",
+  "options": {
+    "client": "postgres",
+    "connection": {
+      "host": "db-postgresql-lon1-15473-do-user-659009-0.b.db.ondigitalocean.com",
+      "port": 25060,
+      "user": "doadmin",
+      "password": "AVNS_HqMLAeBpW5Fct5tasXQ",
+      "database": "defaultdb",
+      "ssl": {
+        "rejectUnauthorized": false
+      }
+    },
+    "meta": {}
+  },
+  "fileName": "DBConnection.json",
+  "actionFilePath": "file:///F:/FIVERR/UK1/LoginDashboard/app/modules/connections/DBConnection.json",
+  "serverType": "node"
+}

@@ -1,4 +1,5 @@
-<!-- Wappler include head-page="layouts/main" -->
+<!-- Wappler include head-page="layouts/main" is="dmx-app" id="dashboard" appConnect="local" -->
+<dmx-serverconnect id="scUserInfo" url="/api/Users/UserInfo"></dmx-serverconnect>
 <meta name="ac:route" content="/dashboard">
 <div class="wrapper">
     <!-- ====================================
@@ -169,7 +170,7 @@
                                                 </div>
                                                 <div class="media-body">
                                                     <a href="user-profile">
-                                                        <span class="title mb-0">John Doe</span>
+                                                        <span class="title mb-0">{{content.scUserInfo.data.UserDetails.user_fname}} {{content.scUserInfo.data.UserDetails.user_lname}}</span>
                                                         <span class="discribe">Extremity sweetness difficult behaviour he of. On disposal of as landlord horrible. Afraid at highly months do things on at.</span>
                                                         <span class="time">
                                                             <time>Just now</time>...
@@ -296,7 +297,7 @@
                                                 </div>
                                                 <div class="media-body">
                                                     <a href="user-profile">
-                                                        <span class="title mb-0">John Doe</span>
+                                                        <span class="title mb-0">{{content.scUserInfo.data.UserDetails.user_fname}} {{content.scUserInfo.data.UserDetails.user_lname}}</span>
                                                         <span class="discribe">Extremity sweetness difficult behaviour he of. On disposal of as landlord horrible. Afraid
                                                             at highly months do things on at.</span>
                                                         <span class="time">
@@ -397,7 +398,7 @@
                         <li class="dropdown user-menu">
                             <button class="dropdown-toggle nav-link" data-toggle="dropdown">
                                 <img src="images/user/user-xs-01.jpg" class="user-image rounded-circle" alt="User Image" />
-                                <span class="d-none d-lg-inline-block">John Doe</span>
+                                <span class="d-none d-lg-inline-block">{{content.scUserInfo.data.UserDetails.user_fname}} {{content.scUserInfo.data.UserDetails.user_lname}}</span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right">
                                 <li>
@@ -442,6 +443,41 @@
         ===================================== -->
         <div class="content-wrapper">
             <div class="content">
+                <!-- login user details -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card card-default">
+                            <div class="card-header">
+                                <h2>User Details</h2>
+                            </div>
+                            <div class="card-body">
+                                <table id="productsTable" class="table table-hover table-product" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Email Id</th>
+                                            <th>Mobile</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <tr>
+                                            <td dmx-text="content.scUserInfo.data.UserDetails.user_fname"></td>
+                                            <td dmx-text="content.scUserInfo.data.UserDetails.user_lname"></td>
+                                            <td dmx-text="content.scUserInfo.data.UserDetails.user_email"></td>
+                                            <td dmx-text="content.scUserInfo.data.UserDetails.mobile"></td>
+                                            <td dmx-text="content.scUserInfo.data.UserDetails.status==1?'Active':'Inactive'">2</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- Top Statistics -->
                 <div class="row">
                     <div class="col-xl-3 col-sm-6">

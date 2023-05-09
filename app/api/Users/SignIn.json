@@ -1,0 +1,320 @@
+{
+  "meta": {
+    "options": {
+      "linkedFile": "/views/login.ejs",
+      "linkedForm": "scFormLogin"
+    },
+    "$_POST": [
+      {
+        "type": "text",
+        "fieldName": "username",
+        "options": {
+          "rules": {}
+        },
+        "name": "username"
+      },
+      {
+        "type": "text",
+        "fieldName": "password",
+        "options": {
+          "rules": {}
+        },
+        "name": "password"
+      },
+      {
+        "type": "text",
+        "fieldName": "remember",
+        "name": "remember"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "",
+      "module": "core",
+      "action": "trycatch",
+      "options": {
+        "try": {
+          "steps": [
+            {
+              "name": "GetSalt",
+              "module": "dbconnector",
+              "action": "single",
+              "options": {
+                "connection": "DBConnection",
+                "sql": {
+                  "type": "SELECT",
+                  "columns": [
+                    {
+                      "table": "m_users",
+                      "column": "id"
+                    },
+                    {
+                      "table": "m_users",
+                      "column": "salt"
+                    }
+                  ],
+                  "table": {
+                    "name": "m_users"
+                  },
+                  "primary": "id",
+                  "joins": [],
+                  "query": "SELECT id, salt\nFROM m_users\nWHERE user_email = :P1 /* {{$_POST.username}} */ AND status = 1 AND deleted_on IS NULL",
+                  "params": [
+                    {
+                      "operator": "equal",
+                      "type": "expression",
+                      "name": ":P1",
+                      "value": "{{$_POST.username}}"
+                    }
+                  ],
+                  "orders": [],
+                  "wheres": {
+                    "condition": "AND",
+                    "rules": [
+                      {
+                        "id": "m_users.user_email",
+                        "field": "m_users.user_email",
+                        "type": "string",
+                        "operator": "equal",
+                        "value": "{{$_POST.username}}",
+                        "data": {
+                          "table": "m_users",
+                          "column": "user_email",
+                          "type": "text",
+                          "columnObj": {
+                            "type": "string",
+                            "maxLength": -5,
+                            "primary": false,
+                            "unique": false,
+                            "nullable": true,
+                            "name": "user_email"
+                          }
+                        },
+                        "operation": "="
+                      },
+                      {
+                        "id": "m_users.status",
+                        "field": "m_users.status",
+                        "type": "double",
+                        "operator": "equal",
+                        "value": 1,
+                        "data": {
+                          "table": "m_users",
+                          "column": "status",
+                          "type": "number",
+                          "columnObj": {
+                            "type": "integer",
+                            "primary": false,
+                            "unique": false,
+                            "nullable": false,
+                            "name": "status"
+                          }
+                        },
+                        "operation": "="
+                      },
+                      {
+                        "id": "m_users.deleted_on",
+                        "field": "m_users.deleted_on",
+                        "type": "datetime",
+                        "operator": "is_null",
+                        "value": null,
+                        "data": {
+                          "table": "m_users",
+                          "column": "deleted_on",
+                          "type": "datetime",
+                          "columnObj": {
+                            "type": "timestamp",
+                            "primary": false,
+                            "unique": false,
+                            "nullable": true,
+                            "name": "deleted_on"
+                          }
+                        },
+                        "operation": "IS NULL"
+                      }
+                    ],
+                    "conditional": null,
+                    "valid": true
+                  }
+                }
+              },
+              "output": false,
+              "meta": [
+                {
+                  "type": "number",
+                  "name": "id"
+                },
+                {
+                  "type": "text",
+                  "name": "salt"
+                }
+              ],
+              "outputType": "object"
+            },
+            {
+              "name": "identity",
+              "module": "auth",
+              "action": "login",
+              "options": {
+                "provider": "security",
+                "password": "{{$_POST.password.sha256(GetSalt.salt)}}"
+              },
+              "output": false,
+              "meta": []
+            },
+            {
+              "name": "",
+              "module": "core",
+              "action": "condition",
+              "options": {
+                "if": "{{identity}}",
+                "then": {
+                  "steps": [
+                    {
+                      "name": "sessionLogin",
+                      "module": "core",
+                      "action": "setsession",
+                      "options": {
+                        "value": "{{identity}}"
+                      },
+                      "output": true
+                    },
+                    {
+                      "name": "loginHistory",
+                      "module": "dbupdater",
+                      "action": "insert",
+                      "options": {
+                        "connection": "DBConnection",
+                        "sql": {
+                          "type": "insert",
+                          "values": [
+                            {
+                              "table": "t_user_log",
+                              "column": "user_id",
+                              "type": "number",
+                              "value": "{{identity}}"
+                            },
+                            {
+                              "table": "t_user_log",
+                              "column": "ip_address",
+                              "type": "text",
+                              "value": "{{$_SERVER.REMOTE_ADDR}}"
+                            },
+                            {
+                              "table": "t_user_log",
+                              "column": "login_time",
+                              "type": "datetime",
+                              "value": "{{NOW}}"
+                            },
+                            {
+                              "table": "t_user_log",
+                              "column": "login_from",
+                              "type": "text",
+                              "value": "{{'Web'}}"
+                            },
+                            {
+                              "table": "t_user_log",
+                              "column": "remote_ip",
+                              "type": "text",
+                              "value": "{{$_SERVER.REMOTE_HOST}}"
+                            },
+                            {
+                              "table": "t_user_log",
+                              "column": "login_server",
+                              "type": "text",
+                              "value": "{{$_SERVER.SERVER_NAME}}"
+                            },
+                            {
+                              "table": "t_user_log",
+                              "column": "login_token",
+                              "type": "text",
+                              "value": "{{sessionLogin}}"
+                            }
+                          ],
+                          "table": "user_log",
+                          "returning": "id",
+                          "query": "INSERT INTO user_log\n(user_id, ip_address, login_time, login_from, remote_ip, login_server, login_token) VALUES (:P1 /* {{identity}} */, :P2 /* {{$_SERVER.REMOTE_ADDR}} */, :P3 /* {{NOW}} */, :P4 /* {{'Web'}} */, :P5 /* {{$_SERVER.REMOTE_HOST}} */, :P6 /* {{$_SERVER.SERVER_NAME}} */, :P7 /* {{sessionLogin}} */)",
+                          "params": [
+                            {
+                              "name": ":P1",
+                              "type": "expression",
+                              "value": "{{identity}}"
+                            },
+                            {
+                              "name": ":P2",
+                              "type": "expression",
+                              "value": "{{$_SERVER.REMOTE_ADDR}}"
+                            },
+                            {
+                              "name": ":P3",
+                              "type": "expression",
+                              "value": "{{NOW}}"
+                            },
+                            {
+                              "name": ":P4",
+                              "type": "expression",
+                              "value": "{{'Web'}}"
+                            },
+                            {
+                              "name": ":P5",
+                              "type": "expression",
+                              "value": "{{$_SERVER.REMOTE_HOST}}"
+                            },
+                            {
+                              "name": ":P6",
+                              "type": "expression",
+                              "value": "{{$_SERVER.SERVER_NAME}}"
+                            },
+                            {
+                              "name": ":P7",
+                              "type": "expression",
+                              "value": "{{sessionLogin}}"
+                            }
+                          ]
+                        }
+                      },
+                      "meta": [
+                        {
+                          "name": "identity",
+                          "type": "text"
+                        },
+                        {
+                          "name": "affected",
+                          "type": "number"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "else": {
+                  "steps": {
+                    "name": "Resp",
+                    "module": "core",
+                    "action": "response",
+                    "options": {
+                      "status": 401,
+                      "data": "Invalid Id or Password"
+                    }
+                  }
+                }
+              },
+              "outputType": "boolean"
+            }
+          ]
+        },
+        "catch": {
+          "steps": {
+            "name": "Resp",
+            "module": "core",
+            "action": "response",
+            "options": {
+              "status": 401,
+              "data": "Suspicious Activity"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -7,13 +7,19 @@
       "layout": "main"
     },
     {
-      "path": "/login",
-      "page": "login"
-    },
-    {
       "path": "/dashboard",
       "page": "dashboard",
       "layout": "main"
+    },
+    {
+      "path": "/signin",
+      "page": "signin",
+      "layout": "login-main"
     }
-  ]
+  ],
+  "layouts": {
+    "main": {
+      "exec": "/api/PageAccess/MainAccess"
+    }
+  }
 }

@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+
+<head>
+    <script src="/dmxAppConnect/dmxAppConnect.js"></script>
+    <base href="/">
+    <meta charset="UTF-8">
+    <title>Login</title>
+
+    <script src="/js/jquery-3.3.1.min.js"></script><script src="/dmxAppConnect/dmxRouting/dmxRouting.js" defer></script>
+    <link rel="stylesheet" href="/dmxAppConnect/dmxNotifications/dmxNotifications.css" />
+    <script src="/dmxAppConnect/dmxNotifications/dmxNotifications.js" defer></script>
+    <script src="/dmxAppConnect/dmxBrowser/dmxBrowser.js" defer></script>
+    <!-- Custom -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="/css/login_style.css">
+</head>
+
+<body is="dmx-app" id="loginmain">
+    <div is="dmx-browser" id="browser1"></div>
+    <dmx-notifications id="notifies1"></dmx-notifications>
+    <div is="dmx-view" id="content">
+        <%- await include(content, locals); %>
+    </div>
+    <!-- Custom -->
+    
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/main.js"></script>
+</body>
+
+</html>

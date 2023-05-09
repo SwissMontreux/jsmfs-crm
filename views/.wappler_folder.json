@@ -6,5 +6,9 @@
   "dashboard.ejs": {
     "layoutPage": "main",
     "description": ""
+  },
+  "signin.ejs": {
+    "layoutPage": "login-main",
+    "description": ""
   }
 }

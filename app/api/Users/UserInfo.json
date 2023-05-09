@@ -1,0 +1,123 @@
+[
+  {
+    "name": "",
+    "module": "auth",
+    "action": "restrict",
+    "options": {
+      "provider": "security",
+      "permissions": [
+        "write"
+      ],
+      "loginUrl": "/login"
+    }
+  },
+  {
+    "name": "identity",
+    "module": "auth",
+    "action": "identify",
+    "options": {
+      "provider": "security"
+    },
+    "output": false,
+    "meta": []
+  },
+  {
+    "name": "UserDetails",
+    "module": "dbconnector",
+    "action": "single",
+    "options": {
+      "connection": "DBConnection",
+      "sql": {
+        "type": "SELECT",
+        "columns": [
+          {
+            "table": "m_users",
+            "column": "user_fname"
+          },
+          {
+            "table": "m_users",
+            "column": "user_lname"
+          },
+          {
+            "table": "m_users",
+            "column": "user_email"
+          },
+          {
+            "table": "m_users",
+            "column": "mobile"
+          },
+          {
+            "table": "m_users",
+            "column": "status"
+          }
+        ],
+        "table": {
+          "name": "m_users"
+        },
+        "primary": "id",
+        "joins": [],
+        "wheres": {
+          "condition": "AND",
+          "rules": [
+            {
+              "id": "m_users.id",
+              "field": "m_users.id",
+              "type": "double",
+              "operator": "equal",
+              "value": "{{identity}}",
+              "data": {
+                "table": "m_users",
+                "column": "id",
+                "type": "number",
+                "columnObj": {
+                  "type": "increments",
+                  "default": "",
+                  "primary": true,
+                  "unique": true,
+                  "nullable": false,
+                  "name": "id"
+                }
+              },
+              "operation": "="
+            }
+          ],
+          "conditional": null,
+          "valid": true
+        },
+        "query": "SELECT user_fname, user_lname, user_email, mobile, status\nFROM m_users\nWHERE id = :P1 /* {{identity}} */",
+        "params": [
+          {
+            "operator": "equal",
+            "type": "expression",
+            "name": ":P1",
+            "value": "{{identity}}"
+          }
+        ]
+      }
+    },
+    "output": true,
+    "meta": [
+      {
+        "type": "text",
+        "name": "user_fname"
+      },
+      {
+        "type": "text",
+        "name": "user_lname"
+      },
+      {
+        "type": "text",
+        "name": "user_email"
+      },
+      {
+        "type": "text",
+        "name": "mobile"
+      },
+      {
+        "type": "number",
+        "name": "status"
+      }
+    ],
+    "outputType": "object"
+  }
+]
