@@ -1,0 +1,31 @@
+<!-- Wappler include head-page="layouts/main" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="adminlogs" appConnect="local" components="{dmxBootstrap5TableGenerator:{},dmxFormatter:{}}" -->
+<meta name="ac:route" content="/admin-logs">
+<dmx-serverconnect id="scAdminLogs" url="/api/Users/AdminLogs" dmx-param:limit="10000"></dmx-serverconnect>
+<div class="container">
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover table-sm">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>User Id</th>
+                    <th>Ip address</th>
+                    <th>Login time</th>
+                    <th>Logout time</th>
+                    <th>Remote ip</th>
+                    <th>Login server</th>
+                </tr>
+            </thead>
+            <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="scAdminLogs.data.query.data" id="tableRepeat1">
+                <tr>
+                    <td dmx-text="$index+1"></td>
+                    <td dmx-text="user_id"></td>
+                    <td dmx-text="ip_address"></td>
+                    <td dmx-text="login_time.formatDate('yyyy-MMM-dd hh:mm A')"></td>
+                    <td dmx-text="logout_time.formatDate('yyyy-MMM-dd hh:mm A')"></td>
+                    <td dmx-text="remote_ip"></td>
+                    <td dmx-text="login_server"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

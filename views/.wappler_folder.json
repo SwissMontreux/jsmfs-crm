@@ -10,5 +10,9 @@
   "signin.ejs": {
     "layoutPage": "login-main",
     "description": ""
+  },
+  "admin-logs.ejs": {
+    "layoutPage": "main",
+    "description": ""
   }
 }

@@ -1,0 +1,57 @@
+[
+  {
+    "name": "",
+    "module": "auth",
+    "action": "restrict",
+    "options": {
+      "provider": "security",
+      "permissions": [
+        "write"
+      ],
+      "loginUrl": "/signin",
+      "forbiddenUrl": "/403-forbidden"
+    }
+  },
+  {
+    "name": "identity",
+    "module": "auth",
+    "action": "identify",
+    "options": {
+      "provider": "security"
+    },
+    "output": false,
+    "meta": []
+  },
+  {
+    "name": "custom",
+    "module": "dbupdater",
+    "action": "custom",
+    "options": {
+      "connection": "DBConnection",
+      "sql": {
+        "query": "update user_log  \n set logout_time = @logout_time\n where user_id = @identity and id = (select max(id) from user_log WHERE user_id = @identity)",
+        "params": [
+          {
+            "name": "@logout_time",
+            "value": "{{NOW}}"
+          },
+          {
+            "name": "@identity",
+            "value": "{{identity}}"
+          }
+        ]
+      }
+    },
+    "output": false,
+    "meta": [],
+    "outputType": "array"
+  },
+  {
+    "name": "",
+    "module": "auth",
+    "action": "logout",
+    "options": {
+      "provider": "security"
+    }
+  }
+]

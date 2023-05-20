@@ -156,6 +156,21 @@
           "user_log": "user_id"
         }
       },
+      "members": {
+        "db": {
+          "schema": "public"
+        }
+      },
+      "orders": {
+        "db": {
+          "schema": "public"
+        }
+      },
+      "perks": {
+        "db": {
+          "schema": "public"
+        }
+      },
       "user_log": {
         "db": {
           "schema": "public"

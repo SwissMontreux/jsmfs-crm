@@ -15,6 +15,11 @@
       "path": "/signin",
       "page": "signin",
       "layout": "login-main"
+    },
+    {
+      "path": "/admin-logs",
+      "page": "admin-logs",
+      "layout": "main"
     }
   ],
   "layouts": {
