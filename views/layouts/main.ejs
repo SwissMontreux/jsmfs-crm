@@ -60,10 +60,14 @@
     <script src="/dmxAppConnect/dmxBootstrap5Navigation/dmxBootstrap5Navigation.js" defer></script>
     <link rel="stylesheet" href="/dmxAppConnect/dmxBootstrap5TableGenerator/dmxBootstrap5TableGenerator.css" />
     <script src="/dmxAppConnect/dmxFormatter/dmxFormatter.js" defer></script>
+    <script src="/dmxAppConnect/dmxStateManagement/dmxStateManagement.js" defer></script>
+    <script src="/dmxAppConnect/dmxDataTraversal/dmxDataTraversal.js" defer></script>
 </head>
 
 <body is="dmx-app" id="body" class="navbar-fixed sidebar-fixed">
+    <dmx-serverconnect id="scUserInfo" url="/api/Users/UserInfo"></dmx-serverconnect>
     <dmx-serverconnect id="scLogOut" url="/api/Users/LogOut" noload dmx-on:success="browser1.goto('/signin')"></dmx-serverconnect>
+    <dmx-value id="varTitle" dmx-bind:value="'Dashboard'"></dmx-value>
     <div is="dmx-browser" id="browser1"></div>
     <dmx-notifications id="notifies1"></dmx-notifications>
     <script>
@@ -96,48 +100,78 @@
                                     <span class="nav-text">Business Dashboard</span>
                                 </a>
                             </li>
-                            <li>
-                                <a class="sidenav-item-link" href="analytics">
-                                    <i class="mdi mdi-chart-line"></i>
-                                    <span class="nav-text">Analytics Dashboard</span>
-                                </a>
-                            </li>
-                            <li class="section-title">
-                                Apps
-                            </li>
-                            <li>
-                                <a class="sidenav-item-link" href="chat">
-                                    <i class="mdi mdi-wechat"></i>
-                                    <span class="nav-text">Chat</span>
-                                </a>
-                            </li>
+                            <hr />
+                            <!-- <li class="section-title">
+                                JSMFS Orders
+                            </li> -->
                             <li class="has-sub">
-                                <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#email" aria-expanded="false" aria-controls="email">
-                                    <i class="mdi mdi-email"></i>
-                                    <span class="nav-text">email</span> <b class="caret"></b>
+                                <a class="sidenav-item-link" href="#" data-toggle="collapse" data-target="#email" aria-expanded="false" aria-controls="email">
+                                    <i class="mdi mdi-view-list"></i>
+                                    <span class="nav-text">Orders</span> <b class="caret"></b>
                                 </a>
                                 <ul class="collapse" id="email" data-parent="#sidebar-menu">
                                     <div class="sub-menu">
                                         <li>
-                                            <a class="sidenav-item-link" href="email-inbox">
-                                                <span class="nav-text">Email Inbox</span>
-
+                                            <a class="sidenav-item-link" href="all-orders">
+                                                <span class="nav-text">All Orders</span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="sidenav-item-link" href="email-details">
-                                                <span class="nav-text">Email Details</span>
-
+                                            <a class="sidenav-item-link" href="mfs-orders">
+                                                <span class="nav-text">MFS Orders</span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="sidenav-item-link" href="email-compose">
-                                                <span class="nav-text">Email Compose</span>
+                                            <a class="sidenav-item-link" href="js-orders">
+                                                <span class="nav-text">JS Orders</span>
 
                                             </a>
                                         </li>
                                     </div>
                                 </ul>
+                            </li>
+                            <hr />
+                            <!-- <li class="section-title">
+                                JSMFS Members
+                            </li> -->
+                            <li class="has-sub">
+                                <a class="sidenav-item-link" href="#" data-toggle="collapse" data-target="#Members" aria-expanded="false" aria-controls="Members">
+                                    <i class="mdi mdi-account-group-outline"></i>
+                                    <span class="nav-text">Members</span> <b class="caret"></b>
+                                </a>
+                                <ul class="collapse" id="Members" data-parent="#sidebar-menu">
+                                    <div class="sub-menu">
+                                        <li>
+                                            <a class="sidenav-item-link" href="all-members">
+                                                <span class="nav-text">All Members</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="sidenav-item-link" href="mfs-members">
+                                                <span class="nav-text">MFS Members</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="sidenav-item-link" href="js-members">
+                                                <span class="nav-text">JS Members</span>
+                                            </a>
+                                        </li>
+                                    </div>
+                                </ul>
+                            </li>
+                            <hr />
+                            <li>
+                                <a class="sidenav-item-link" href="perks">
+                                    <i class="mdi mdi-package-variant"></i>
+                                    <span class="nav-text">Perks</span>
+                                </a>
+                            </li>
+                            <hr />
+                            <li>
+                                <a class="sidenav-item-link" href="documents">
+                                    <i class="mdi mdi-file-multiple"></i>
+                                    <span class="nav-text">Documents</span>
+                                </a>
                             </li>
 
                         </ul>
@@ -171,7 +205,7 @@
                             <span class="sr-only">Toggle navigation</span>
                         </button>
 
-                        <span class="page-title">dashboard</span>
+                        <span class="page-title">{{varTitle.value}}</span>
 
                         <div class="navbar-right ">
 
@@ -239,7 +273,7 @@
                                                         </div>
                                                         <div class="media-body">
                                                             <a href="user-profile">
-                                                                <span class="title mb-0">{{content.scUserInfo.data.UserDetails.user_fname}} {{content.scUserInfo.data.UserDetails.user_lname}}</span>
+                                                                <span class="title mb-0">{{scUserInfo.data.UserDetails.user_fname}} {{scUserInfo.data.UserDetails.user_lname}}</span>
                                                                 <span class="discribe">Extremity sweetness difficult behaviour he of. On disposal of as landlord horrible. Afraid at highly months do things on at.</span>
                                                                 <span class="time">
                                                                     <time>Just now</time>...
@@ -366,7 +400,7 @@
                                                         </div>
                                                         <div class="media-body">
                                                             <a href="user-profile">
-                                                                <span class="title mb-0">{{content.scUserInfo.data.UserDetails.user_fname}} {{content.scUserInfo.data.UserDetails.user_lname}}</span>
+                                                                <span class="title mb-0">{{scUserInfo.data.UserDetails.user_fname}} {{scUserInfo.data.UserDetails.user_lname}}</span>
                                                                 <span class="discribe">Extremity sweetness difficult behaviour he of. On disposal of as landlord horrible. Afraid
                                                                     at highly months do things on at.</span>
                                                                 <span class="time">
@@ -467,7 +501,7 @@
                                 <li class="dropdown user-menu">
                                     <button class="dropdown-toggle nav-link" data-toggle="dropdown">
                                         <img src="images/user/user-xs-01.jpg" class="user-image rounded-circle" alt="User Image" />
-                                        <span class="d-none d-lg-inline-block">{{content.scUserInfo.data.UserDetails.user_fname}} {{content.scUserInfo.data.UserDetails.user_lname}}</span>
+                                        <span class="d-none d-lg-inline-block">{{scUserInfo.data.UserDetails.user_fname}} {{scUserInfo.data.UserDetails.user_lname}}</span>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-right">
                                         <li>
@@ -511,7 +545,7 @@
                     <footer class="footer mt-auto">
                         <div class="copyright bg-white">
                             <p>
-                                &copy; <span id="copy-year"></span> Copyright Dashboard
+                                &copy; <span id="copy-year"></span> Copyright {{varTitle.value}}
                             </p>
                         </div>
                         <script>

@@ -14,5 +14,9 @@
   "admin-logs.ejs": {
     "layoutPage": "main",
     "description": ""
+  },
+  "all-orders.ejs": {
+    "layoutPage": "main",
+    "description": ""
   }
 }

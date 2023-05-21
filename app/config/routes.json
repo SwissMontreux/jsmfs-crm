@@ -20,6 +20,11 @@
       "path": "/admin-logs",
       "page": "admin-logs",
       "layout": "main"
+    },
+    {
+      "path": "/all-orders",
+      "page": "all-orders",
+      "layout": "main"
     }
   ],
   "layouts": {
