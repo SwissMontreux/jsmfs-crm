@@ -62,6 +62,8 @@
     <script src="/dmxAppConnect/dmxFormatter/dmxFormatter.js" defer></script>
     <script src="/dmxAppConnect/dmxStateManagement/dmxStateManagement.js" defer></script>
     <script src="/dmxAppConnect/dmxDataTraversal/dmxDataTraversal.js" defer></script>
+    <link rel="stylesheet" href="/dmxAppConnect/dmxPreloader/dmxPreloader.css" />
+    <script src="/dmxAppConnect/dmxPreloader/dmxPreloader.js" defer></script>
 </head>
 
 <body is="dmx-app" id="body" class="navbar-fixed sidebar-fixed">
@@ -70,6 +72,7 @@
     <dmx-value id="varTitle" dmx-bind:value="'Dashboard'"></dmx-value>
     <div is="dmx-browser" id="browser1"></div>
     <dmx-notifications id="notifies1"></dmx-notifications>
+    <dmx-preloader id="preloader1" spinner="wave" color="#FF9838" dmx-show="scUserInfo.state.executing"></dmx-preloader>
     <script>
         NProgress.configure({ showSpinner: false });
           NProgress.start();
@@ -211,15 +214,15 @@
 
                             <!-- search form -->
                             <div class="search-form">
-                                <form action="dashboard" method="get">
+                                <form action="#" method="get" id="Search">
                                     <div class="input-group input-group-sm" id="input-group-search">
-                                        <input type="text" autocomplete="off" name="query" id="search-input" class="form-control" placeholder="Search..." />
+                                        <input type="text" autocomplete="off" id="search-input" class="form-control" placeholder="Search..." />
                                         <div class="input-group-append">
                                             <button class="btn" type="button">/</button>
                                         </div>
                                     </div>
                                 </form>
-                                <ul class="dropdown-menu dropdown-menu-search">
+                                <!-- <ul class="dropdown-menu dropdown-menu-search">
 
                                     <li class="nav-item">
                                         <a class="nav-link" href="dashboard">Morbi leo risus</a>
@@ -234,7 +237,7 @@
                                         <a class="nav-link" href="dashboard">Vestibulum at eros</a>
                                     </li>
 
-                                </ul>
+                                </ul> -->
 
                             </div>
 

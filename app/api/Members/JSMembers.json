@@ -1,0 +1,272 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "offset"
+      },
+      {
+        "type": "text",
+        "name": "limit"
+      },
+      {
+        "type": "text",
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      }
+    ]
+  },
+  "exec": {
+    "steps": [
+      {
+        "name": "",
+        "module": "auth",
+        "action": "restrict",
+        "options": {
+          "provider": "security",
+          "permissions": [
+            "write"
+          ],
+          "loginUrl": "/login",
+          "forbiddenUrl": "/403-forbidden"
+        }
+      },
+      {
+        "name": "JsMembers",
+        "module": "dbconnector",
+        "action": "paged",
+        "options": {
+          "connection": "DBConnection",
+          "sql": {
+            "type": "SELECT",
+            "columns": [
+              {
+                "table": "members",
+                "column": "id"
+              },
+              {
+                "table": "members",
+                "column": "created_at"
+              },
+              {
+                "table": "members",
+                "column": "member_id"
+              },
+              {
+                "table": "members",
+                "column": "first_name"
+              },
+              {
+                "table": "members",
+                "column": "last_name"
+              },
+              {
+                "table": "members",
+                "column": "company_name"
+              },
+              {
+                "table": "members",
+                "column": "email"
+              },
+              {
+                "table": "members",
+                "column": "telephone"
+              },
+              {
+                "table": "members",
+                "column": "address1"
+              },
+              {
+                "table": "members",
+                "column": "address2"
+              },
+              {
+                "table": "members",
+                "column": "town/city"
+              },
+              {
+                "table": "members",
+                "column": "county"
+              },
+              {
+                "table": "members",
+                "column": "psotcode"
+              },
+              {
+                "table": "members",
+                "column": "country"
+              }
+            ],
+            "table": {
+              "name": "members"
+            },
+            "primary": "id",
+            "joins": [],
+            "orders": [
+              {
+                "table": "members",
+                "column": "id",
+                "direction": "DESC",
+                "recid": 1
+              }
+            ],
+            "query": "SELECT id, created_at, member_id, first_name, last_name, company_name, email, telephone, address1, address2, \"town/city\", county, psotcode, country\nFROM members\nWHERE business_line = :P1 /* {{'js'}} */\nORDER BY id DESC",
+            "params": [
+              {
+                "operator": "equal",
+                "type": "expression",
+                "name": ":P1",
+                "value": "{{'js'}}"
+              }
+            ],
+            "wheres": {
+              "condition": "AND",
+              "rules": [
+                {
+                  "id": "members.business_line",
+                  "field": "members.business_line",
+                  "type": "string",
+                  "operator": "equal",
+                  "value": "{{'js'}}",
+                  "data": {
+                    "table": "members",
+                    "column": "business_line",
+                    "type": "text",
+                    "columnObj": {
+                      "type": "string",
+                      "maxLength": 5,
+                      "primary": false,
+                      "unique": false,
+                      "nullable": true,
+                      "name": "business_line"
+                    }
+                  },
+                  "operation": "="
+                }
+              ],
+              "conditional": null,
+              "valid": true
+            }
+          }
+        },
+        "output": true,
+        "meta": [
+          {
+            "name": "offset",
+            "type": "number"
+          },
+          {
+            "name": "limit",
+            "type": "number"
+          },
+          {
+            "name": "total",
+            "type": "number"
+          },
+          {
+            "name": "page",
+            "type": "object",
+            "sub": [
+              {
+                "name": "offset",
+                "type": "object",
+                "sub": [
+                  {
+                    "name": "first",
+                    "type": "number"
+                  },
+                  {
+                    "name": "prev",
+                    "type": "number"
+                  },
+                  {
+                    "name": "next",
+                    "type": "number"
+                  },
+                  {
+                    "name": "last",
+                    "type": "number"
+                  }
+                ]
+              },
+              {
+                "name": "current",
+                "type": "number"
+              },
+              {
+                "name": "total",
+                "type": "number"
+              }
+            ]
+          },
+          {
+            "name": "data",
+            "type": "array",
+            "sub": [
+              {
+                "type": "number",
+                "name": "id"
+              },
+              {
+                "type": "datetime",
+                "name": "created_at"
+              },
+              {
+                "type": "text",
+                "name": "member_id"
+              },
+              {
+                "type": "text",
+                "name": "first_name"
+              },
+              {
+                "type": "text",
+                "name": "last_name"
+              },
+              {
+                "type": "text",
+                "name": "company_name"
+              },
+              {
+                "type": "text",
+                "name": "email"
+              },
+              {
+                "type": "text",
+                "name": "telephone"
+              },
+              {
+                "type": "text",
+                "name": "address1"
+              },
+              {
+                "type": "text",
+                "name": "address2"
+              },
+              {
+                "type": "text",
+                "name": "town/city"
+              },
+              {
+                "type": "text",
+                "name": "county"
+              },
+              {
+                "type": "text",
+                "name": "psotcode"
+              },
+              {
+                "type": "text",
+                "name": "country"
+              }
+            ]
+          }
+        ],
+        "outputType": "object"
+      }
+    ]
+  }
+}

@@ -18,5 +18,29 @@
   "all-orders.ejs": {
     "layoutPage": "main",
     "description": ""
+  },
+  "mfs-orders.ejs": {
+    "layoutPage": "main",
+    "description": ""
+  },
+  "js-orders.ejs": {
+    "layoutPage": "main",
+    "description": ""
+  },
+  "perks.ejs": {
+    "layoutPage": "main",
+    "description": ""
+  },
+  "all-members.ejs": {
+    "layoutPage": "main",
+    "description": ""
+  },
+  "mfs-members.ejs": {
+    "layoutPage": "main",
+    "description": ""
+  },
+  "js-members.ejs": {
+    "layoutPage": "main",
+    "description": ""
   }
 }

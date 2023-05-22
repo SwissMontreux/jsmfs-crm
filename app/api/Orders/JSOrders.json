@@ -1,0 +1,324 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "offset"
+      },
+      {
+        "type": "text",
+        "name": "limit"
+      },
+      {
+        "type": "text",
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      }
+    ]
+  },
+  "exec": {
+    "steps": [
+      {
+        "name": "",
+        "module": "auth",
+        "action": "restrict",
+        "options": {
+          "provider": "security",
+          "permissions": [
+            "write"
+          ],
+          "loginUrl": "/signin",
+          "forbiddenUrl": "/403-forbidden"
+        }
+      },
+      {
+        "name": "JsOrders",
+        "module": "dbconnector",
+        "action": "paged",
+        "options": {
+          "connection": "DBConnection",
+          "sql": {
+            "type": "SELECT",
+            "columns": [
+              {
+                "table": "orders",
+                "column": "id"
+              },
+              {
+                "table": "orders",
+                "column": "created_at"
+              },
+              {
+                "table": "memb",
+                "column": "first_name"
+              },
+              {
+                "table": "memb",
+                "column": "last_name"
+              },
+              {
+                "table": "pk",
+                "column": "perk_name"
+              },
+              {
+                "table": "orders",
+                "column": "mfs_order_id"
+              },
+              {
+                "table": "orders",
+                "column": "hubspot_order_id"
+              },
+              {
+                "table": "orders",
+                "column": "order_total"
+              },
+              {
+                "table": "orders",
+                "column": "discount_total"
+              },
+              {
+                "table": "orders",
+                "column": "refunded_total"
+              },
+              {
+                "table": "orders",
+                "column": "order_currency"
+              },
+              {
+                "table": "orders",
+                "column": "payment_method"
+              },
+              {
+                "table": "orders",
+                "column": "payment_status"
+              },
+              {
+                "table": "orders",
+                "column": "order_note"
+              },
+              {
+                "table": "orders",
+                "column": "tags"
+              }
+            ],
+            "table": {
+              "name": "orders"
+            },
+            "primary": "id",
+            "joins": [
+              {
+                "table": "members",
+                "column": "*",
+                "alias": "memb",
+                "type": "LEFT",
+                "clauses": {
+                  "condition": "AND",
+                  "rules": [
+                    {
+                      "table": "memb",
+                      "column": "member_id",
+                      "operator": "equal",
+                      "value": {
+                        "table": "orders",
+                        "column": "member_id"
+                      },
+                      "operation": "="
+                    }
+                  ]
+                },
+                "primary": "id"
+              },
+              {
+                "table": "perks",
+                "column": "*",
+                "alias": "pk",
+                "type": "LEFT",
+                "clauses": {
+                  "condition": "AND",
+                  "rules": [
+                    {
+                      "table": "pk",
+                      "column": "perk_id",
+                      "operator": "equal",
+                      "value": {
+                        "table": "orders",
+                        "column": "perk_id"
+                      },
+                      "operation": "="
+                    }
+                  ]
+                },
+                "primary": "id"
+              }
+            ],
+            "query": "SELECT orders.id, orders.created_at, memb.first_name, memb.last_name, pk.perk_name, orders.mfs_order_id, orders.hubspot_order_id, orders.order_total, orders.discount_total, orders.refunded_total, orders.order_currency, orders.payment_method, orders.payment_status, orders.order_note, orders.tags\nFROM orders\nLEFT JOIN members AS memb ON (memb.member_id = orders.member_id) LEFT JOIN perks AS pk ON (pk.perk_id = orders.perk_id)\nWHERE orders.business_line = :P1 /* {{'js'}} */\nORDER BY orders.id DESC",
+            "params": [
+              {
+                "operator": "equal",
+                "type": "expression",
+                "name": ":P1",
+                "value": "{{'js'}}"
+              }
+            ],
+            "wheres": {
+              "condition": "AND",
+              "rules": [
+                {
+                  "id": "orders.business_line",
+                  "field": "orders.business_line",
+                  "type": "string",
+                  "operator": "equal",
+                  "value": "{{'js'}}",
+                  "data": {
+                    "table": "orders",
+                    "column": "business_line",
+                    "type": "text",
+                    "columnObj": {
+                      "type": "string",
+                      "maxLength": 5,
+                      "primary": false,
+                      "unique": false,
+                      "nullable": true,
+                      "name": "business_line"
+                    }
+                  },
+                  "operation": "="
+                }
+              ],
+              "conditional": null,
+              "valid": true
+            },
+            "orders": [
+              {
+                "table": "orders",
+                "column": "id",
+                "direction": "DESC"
+              }
+            ]
+          }
+        },
+        "output": true,
+        "meta": [
+          {
+            "name": "offset",
+            "type": "number"
+          },
+          {
+            "name": "limit",
+            "type": "number"
+          },
+          {
+            "name": "total",
+            "type": "number"
+          },
+          {
+            "name": "page",
+            "type": "object",
+            "sub": [
+              {
+                "name": "offset",
+                "type": "object",
+                "sub": [
+                  {
+                    "name": "first",
+                    "type": "number"
+                  },
+                  {
+                    "name": "prev",
+                    "type": "number"
+                  },
+                  {
+                    "name": "next",
+                    "type": "number"
+                  },
+                  {
+                    "name": "last",
+                    "type": "number"
+                  }
+                ]
+              },
+              {
+                "name": "current",
+                "type": "number"
+              },
+              {
+                "name": "total",
+                "type": "number"
+              }
+            ]
+          },
+          {
+            "name": "data",
+            "type": "array",
+            "sub": [
+              {
+                "type": "number",
+                "name": "id"
+              },
+              {
+                "type": "datetime",
+                "name": "created_at"
+              },
+              {
+                "type": "text",
+                "name": "first_name"
+              },
+              {
+                "type": "text",
+                "name": "last_name"
+              },
+              {
+                "type": "text",
+                "name": "perk_name"
+              },
+              {
+                "type": "text",
+                "name": "mfs_order_id"
+              },
+              {
+                "type": "text",
+                "name": "hubspot_order_id"
+              },
+              {
+                "type": "number",
+                "name": "order_total"
+              },
+              {
+                "type": "number",
+                "name": "discount_total"
+              },
+              {
+                "type": "number",
+                "name": "refunded_total"
+              },
+              {
+                "type": "text",
+                "name": "order_currency"
+              },
+              {
+                "type": "text",
+                "name": "payment_method"
+              },
+              {
+                "type": "text",
+                "name": "payment_status"
+              },
+              {
+                "type": "text",
+                "name": "order_note"
+              },
+              {
+                "type": "text",
+                "name": "tags"
+              }
+            ]
+          }
+        ],
+        "outputType": "object"
+      }
+    ]
+  }
+}

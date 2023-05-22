@@ -25,6 +25,36 @@
       "path": "/all-orders",
       "page": "all-orders",
       "layout": "main"
+    },
+    {
+      "path": "/mfs-orders",
+      "page": "mfs-orders",
+      "layout": "main"
+    },
+    {
+      "path": "/js-orders",
+      "page": "js-orders",
+      "layout": "main"
+    },
+    {
+      "path": "/perks",
+      "page": "perks",
+      "layout": "main"
+    },
+    {
+      "path": "/all-members",
+      "page": "all-members",
+      "layout": "main"
+    },
+    {
+      "path": "/mfs-members",
+      "page": "mfs-members",
+      "layout": "main"
+    },
+    {
+      "path": "/js-members",
+      "page": "js-members",
+      "layout": "main"
     }
   ],
   "layouts": {

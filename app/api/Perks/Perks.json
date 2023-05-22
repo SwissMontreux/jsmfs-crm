@@ -1,0 +1,156 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "offset"
+      },
+      {
+        "type": "text",
+        "name": "limit"
+      },
+      {
+        "type": "text",
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      }
+    ]
+  },
+  "exec": {
+    "steps": [
+      {
+        "name": "",
+        "module": "auth",
+        "action": "restrict",
+        "options": {
+          "provider": "security",
+          "permissions": [
+            "write"
+          ],
+          "loginUrl": "/signin",
+          "forbiddenUrl": "/403-forbidden"
+        }
+      },
+      {
+        "name": "queryParks",
+        "module": "dbconnector",
+        "action": "paged",
+        "options": {
+          "connection": "DBConnection",
+          "sql": {
+            "type": "SELECT",
+            "columns": [
+              {
+                "table": "perks",
+                "column": "id"
+              },
+              {
+                "table": "perks",
+                "column": "perk_id"
+              },
+              {
+                "table": "perks",
+                "column": "perk_name"
+              },
+              {
+                "table": "perks",
+                "column": "category"
+              }
+            ],
+            "table": {
+              "name": "perks"
+            },
+            "primary": "id",
+            "joins": [],
+            "orders": [
+              {
+                "table": "perks",
+                "column": "id",
+                "direction": "DESC"
+              }
+            ],
+            "query": "SELECT id, perk_id, perk_name, category\nFROM perks\nORDER BY id DESC",
+            "params": []
+          }
+        },
+        "output": true,
+        "meta": [
+          {
+            "name": "offset",
+            "type": "number"
+          },
+          {
+            "name": "limit",
+            "type": "number"
+          },
+          {
+            "name": "total",
+            "type": "number"
+          },
+          {
+            "name": "page",
+            "type": "object",
+            "sub": [
+              {
+                "name": "offset",
+                "type": "object",
+                "sub": [
+                  {
+                    "name": "first",
+                    "type": "number"
+                  },
+                  {
+                    "name": "prev",
+                    "type": "number"
+                  },
+                  {
+                    "name": "next",
+                    "type": "number"
+                  },
+                  {
+                    "name": "last",
+                    "type": "number"
+                  }
+                ]
+              },
+              {
+                "name": "current",
+                "type": "number"
+              },
+              {
+                "name": "total",
+                "type": "number"
+              }
+            ]
+          },
+          {
+            "name": "data",
+            "type": "array",
+            "sub": [
+              {
+                "type": "number",
+                "name": "id"
+              },
+              {
+                "type": "text",
+                "name": "perk_id"
+              },
+              {
+                "type": "text",
+                "name": "perk_name"
+              },
+              {
+                "type": "text",
+                "name": "category"
+              }
+            ]
+          }
+        ],
+        "outputType": "object"
+      }
+    ]
+  }
+}

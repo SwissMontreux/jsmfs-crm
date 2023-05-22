@@ -1,0 +1,48 @@
+<!-- Wappler include head-page="layouts/main" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="jsmembers" appConnect="local" components="{dmxStateManagement:{},dmxDataTraversal:{},dmxBootstrap5TableGenerator:{}}" -->
+<meta name="ac:route" content="/js-members">
+<!-- New Wappler Page -->
+<dmx-query-manager id="qm"></dmx-query-manager>
+<dmx-serverconnect id="scJsMembers" dmx-param:offset="content.qm.data.offset" dmx-param:limit="10000" dmx-param:sort="content.qm.data.sort" dmx-param:dir="content.qm.data.dir" dmx-on:success="varTitle.setValue('JS Members')" url="/api/Members/JSMembers"></dmx-serverconnect>
+<dmx-data-view id="dvJsMembers" dmx-bind:data="scJsMembers.data.JsMembers.data" filter="(created_at.lowercase().contains(Search.searchinput.value.lowercase())||business_line.lowercase().contains(Search.searchinput.value.lowercase())||first_name.lowercase().contains(Search.searchinput.value.lowercase())||last_name.lowercase().contains(Search.searchinput.value.lowercase())||company_name.lowercase().contains(Search.searchinput.value.lowercase())||email.lowercase().contains(Search.searchinput.value.lowercase())||telephone.lowercase().contains(Search.searchinput.value.lowercase())||address1.lowercase().contains(Search.searchinput.value.lowercase()))"></dmx-data-view>
+<div class="container">
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover table-sm">
+            <thead>
+                <tr>
+                    <th class="sorting" dmx-on:click="qm.set('sort','$index+1');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='$index+1' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='$index+1' && qm.data.dir == 'desc'">Sl. No.</th>
+                    <th class="sorting" dmx-on:click="qm.set('sort','created_at');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='created_at' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='created_at' && qm.data.dir == 'desc'">Created at</th>
+                    <th class="sorting" dmx-on:click="qm.set('sort','member_id');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='member_id' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='member_id' && qm.data.dir == 'desc'">Member</th>
+                    <th class="sorting" dmx-on:click="qm.set('sort','first_name');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='first_name' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='first_name' && qm.data.dir == 'desc'">First name</th>
+                    <th class="sorting" dmx-on:click="qm.set('sort','last_name');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='last_name' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='last_name' && qm.data.dir == 'desc'">Last name</th>
+                    <th class="sorting" dmx-on:click="qm.set('sort','company_name');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='company_name' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='company_name' && qm.data.dir == 'desc'">Company name</th>
+                    <th class="sorting" dmx-on:click="qm.set('sort','email');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='email' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='email' && qm.data.dir == 'desc'">Email</th>
+                    <th class="sorting" dmx-on:click="qm.set('sort','telephone');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='telephone' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='telephone' && qm.data.dir == 'desc'">Telephone</th>
+                    <th class="sorting" dmx-on:click="qm.set('sort','address1');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='address1' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='address1' && qm.data.dir == 'desc'">Address1</th>
+                    <th class="sorting" dmx-on:click="qm.set('sort','address2');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='address2' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='address2' && qm.data.dir == 'desc'">Address2</th>
+                    <th class="sorting" dmx-on:click="qm.set('sort','');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='' && qm.data.dir == 'desc'">Town/city</th>
+                    <th class="sorting" dmx-on:click="qm.set('sort','county');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='county' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='county' && qm.data.dir == 'desc'">County</th>
+                    <th class="sorting" dmx-on:click="qm.set('sort','psotcode');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='psotcode' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='psotcode' && qm.data.dir == 'desc'">Psotcode</th>
+                    <th class="sorting" dmx-on:click="qm.set('sort','country');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='country' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='country' && qm.data.dir == 'desc'">Country</th>
+                </tr>
+            </thead>
+            <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="dvJsMembers.data.JsMembers" id="tableRepeat2" dmx-state="qm" dmx-sort="sort" dmx-order="dir">
+                <tr>
+                    <td dmx-text="$index+1"></td>
+                    <td dmx-text="created_at.formatDate('yyyy-MMM-dd hh:mm A')"></td>
+                    <td dmx-text="member_id"></td>
+                    <td dmx-text="first_name"></td>
+                    <td dmx-text="last_name"></td>
+                    <td dmx-text="company_name"></td>
+                    <td dmx-text="email"></td>
+                    <td dmx-text="telephone"></td>
+                    <td dmx-text="address1"></td>
+                    <td dmx-text="address2"></td>
+                    <td dmx-text="['town/city']"></td>
+                    <td dmx-text="county"></td>
+                    <td dmx-text="psotcode"></td>
+                    <td dmx-text="country"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
