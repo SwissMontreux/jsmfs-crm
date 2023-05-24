@@ -1,6 +1,6 @@
 <!-- Wappler include head-page="layouts/main" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="jsmembers" appConnect="local" components="{dmxStateManagement:{},dmxDataTraversal:{},dmxBootstrap5TableGenerator:{}}" -->
 <meta name="ac:route" content="/js-members">
-<!-- New Wappler Page -->
+
 <dmx-query-manager id="qm"></dmx-query-manager>
 <dmx-serverconnect id="scJsMembers" dmx-param:offset="content.qm.data.offset" dmx-param:limit="10000" dmx-param:sort="content.qm.data.sort" dmx-param:dir="content.qm.data.dir" dmx-on:success="varTitle.setValue('JS Members')" url="/api/Members/JSMembers"></dmx-serverconnect>
 <dmx-data-view id="dvJsMembers" dmx-bind:data="scJsMembers.data.JsMembers.data" filter="(created_at.lowercase().contains(Search.searchinput.value.lowercase())||business_line.lowercase().contains(Search.searchinput.value.lowercase())||first_name.lowercase().contains(Search.searchinput.value.lowercase())||last_name.lowercase().contains(Search.searchinput.value.lowercase())||company_name.lowercase().contains(Search.searchinput.value.lowercase())||email.lowercase().contains(Search.searchinput.value.lowercase())||telephone.lowercase().contains(Search.searchinput.value.lowercase())||address1.lowercase().contains(Search.searchinput.value.lowercase()))"></dmx-data-view>
@@ -25,7 +25,7 @@
                     <th class="sorting" dmx-on:click="qm.set('sort','country');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='country' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='country' && qm.data.dir == 'desc'">Country</th>
                 </tr>
             </thead>
-            <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="dvJsMembers.data.JsMembers" id="tableRepeat2" dmx-state="qm" dmx-sort="sort" dmx-order="dir">
+            <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="dvJsMembers.data" id="tableRepeat2" dmx-state="qm" dmx-sort="sort" dmx-order="dir">
                 <tr>
                     <td dmx-text="$index+1"></td>
                     <td dmx-text="created_at.formatDate('yyyy-MMM-dd hh:mm A')"></td>
