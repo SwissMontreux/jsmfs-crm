@@ -55,6 +55,21 @@
       "path": "/js-members",
       "page": "js-members",
       "layout": "main"
+    },
+    {
+      "path": "/documents",
+      "page": "documents",
+      "layout": "main"
+    },
+    {
+      "path": "/user-profile",
+      "page": "user-profile",
+      "layout": "main"
+    },
+    {
+      "path": "/user-account-settings",
+      "page": "user-account-settings",
+      "layout": "main"
     }
   ],
   "layouts": {

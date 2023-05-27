@@ -42,5 +42,17 @@
   "js-members.ejs": {
     "layoutPage": "main",
     "description": ""
+  },
+  "documents.ejs": {
+    "layoutPage": "main",
+    "description": ""
+  },
+  "user-profile.ejs": {
+    "layoutPage": "main",
+    "description": ""
+  },
+  "user-account-settings.ejs": {
+    "layoutPage": "main",
+    "description": ""
   }
 }

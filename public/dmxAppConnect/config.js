@@ -784,5 +784,70 @@ dmx.config({
       ],
       "outputType": "array"
     }
+  },
+  "documents": {
+    "query": [
+      {
+        "type": "text",
+        "name": "offset"
+      },
+      {
+        "type": "text",
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "limit"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      }
+    ],
+    "dvDocuments": {
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "text",
+          "name": "document_id"
+        },
+        {
+          "type": "text",
+          "name": "document_name"
+        },
+        {
+          "type": "text",
+          "name": "first_name"
+        },
+        {
+          "type": "text",
+          "name": "last_name"
+        },
+        {
+          "type": "text",
+          "name": "visible"
+        },
+        {
+          "type": "text",
+          "name": "type"
+        },
+        {
+          "type": "text",
+          "name": "rm_tracking"
+        },
+        {
+          "type": "datetime",
+          "name": "created_at"
+        },
+        {
+          "type": "text",
+          "name": "document_location"
+        }
+      ],
+      "outputType": "array"
+    }
   }
 });

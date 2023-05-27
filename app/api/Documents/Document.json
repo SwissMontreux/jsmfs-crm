@@ -1,0 +1,204 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "offset"
+      },
+      {
+        "type": "text",
+        "name": "limit"
+      },
+      {
+        "type": "text",
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "query",
+      "module": "dbconnector",
+      "action": "paged",
+      "options": {
+        "connection": "DBConnection",
+        "sql": {
+          "type": "SELECT",
+          "columns": [
+            {
+              "table": "documents",
+              "column": "id"
+            },
+            {
+              "table": "documents",
+              "column": "document_id"
+            },
+            {
+              "table": "documents",
+              "column": "document_name"
+            },
+            {
+              "table": "documents",
+              "column": "member_id"
+            },
+            {
+              "table": "documents",
+              "column": "doc_type"
+            },
+            {
+              "table": "documents",
+              "column": "created_at"
+            },
+            {
+              "table": "documents",
+              "column": "document_location"
+            },
+            {
+              "table": "memb",
+              "column": "first_name"
+            },
+            {
+              "table": "memb",
+              "column": "last_name"
+            }
+          ],
+          "table": {
+            "name": "documents"
+          },
+          "joins": [
+            {
+              "table": "members",
+              "column": "*",
+              "alias": "memb",
+              "type": "LEFT",
+              "clauses": {
+                "condition": "AND",
+                "rules": [
+                  {
+                    "table": "memb",
+                    "column": "member_id",
+                    "operator": "equal",
+                    "value": {
+                      "table": "documents",
+                      "column": "member_id"
+                    },
+                    "operation": "="
+                  }
+                ]
+              },
+              "primary": "id"
+            }
+          ],
+          "orders": [
+            {
+              "table": "documents",
+              "column": "id",
+              "direction": "DESC"
+            }
+          ],
+          "query": "SELECT documents.id, documents.document_id, documents.document_name, documents.member_id, documents.doc_type, documents.created_at, documents.document_location, memb.first_name, memb.last_name\nFROM documents\nLEFT JOIN members AS memb ON (memb.member_id = documents.member_id)\nORDER BY documents.id DESC",
+          "params": [],
+          "primary": "id"
+        }
+      },
+      "output": true,
+      "meta": [
+        {
+          "name": "offset",
+          "type": "number"
+        },
+        {
+          "name": "limit",
+          "type": "number"
+        },
+        {
+          "name": "total",
+          "type": "number"
+        },
+        {
+          "name": "page",
+          "type": "object",
+          "sub": [
+            {
+              "name": "offset",
+              "type": "object",
+              "sub": [
+                {
+                  "name": "first",
+                  "type": "number"
+                },
+                {
+                  "name": "prev",
+                  "type": "number"
+                },
+                {
+                  "name": "next",
+                  "type": "number"
+                },
+                {
+                  "name": "last",
+                  "type": "number"
+                }
+              ]
+            },
+            {
+              "name": "current",
+              "type": "number"
+            },
+            {
+              "name": "total",
+              "type": "number"
+            }
+          ]
+        },
+        {
+          "name": "data",
+          "type": "array",
+          "sub": [
+            {
+              "type": "number",
+              "name": "id"
+            },
+            {
+              "type": "text",
+              "name": "document_id"
+            },
+            {
+              "type": "text",
+              "name": "document_name"
+            },
+            {
+              "type": "text",
+              "name": "member_id"
+            },
+            {
+              "type": "text",
+              "name": "doc_type"
+            },
+            {
+              "type": "datetime",
+              "name": "created_at"
+            },
+            {
+              "type": "text",
+              "name": "document_location"
+            },
+            {
+              "type": "text",
+              "name": "first_name"
+            },
+            {
+              "type": "text",
+              "name": "last_name"
+            }
+          ]
+        }
+      ],
+      "outputType": "object"
+    }
+  }
+}
