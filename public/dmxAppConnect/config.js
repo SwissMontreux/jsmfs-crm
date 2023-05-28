@@ -849,5 +849,171 @@ dmx.config({
       ],
       "outputType": "array"
     }
+  },
+  "membersprofile": {
+    "query": [
+      {
+        "type": "text",
+        "name": "offset"
+      },
+      {
+        "type": "text",
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "limit"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      }
+    ],
+    "dvMemberDetails": {
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "datetime",
+          "name": "created_at"
+        },
+        {
+          "type": "text",
+          "name": "business_line"
+        },
+        {
+          "type": "text",
+          "name": "hubspot_order_id"
+        },
+        {
+          "type": "text",
+          "name": "member_id"
+        },
+        {
+          "type": "text",
+          "name": "perk_id"
+        },
+        {
+          "type": "number",
+          "name": "order_total"
+        },
+        {
+          "type": "number",
+          "name": "discount_total"
+        },
+        {
+          "type": "number",
+          "name": "refunded_total"
+        },
+        {
+          "type": "text",
+          "name": "order_currency"
+        },
+        {
+          "type": "text",
+          "name": "payment_method"
+        },
+        {
+          "type": "text",
+          "name": "payment_status"
+        },
+        {
+          "type": "text",
+          "name": "order_note"
+        },
+        {
+          "type": "text",
+          "name": "tags"
+        },
+        {
+          "type": "text",
+          "name": "mfs_order_id"
+        },
+        {
+          "type": "text",
+          "name": "perk_name"
+        },
+        {
+          "type": "text",
+          "name": "category"
+        }
+      ],
+      "outputType": "array"
+    },
+    "tableRepeat2": {
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "datetime",
+          "name": "created_at"
+        },
+        {
+          "type": "text",
+          "name": "business_line"
+        },
+        {
+          "type": "text",
+          "name": "hubspot_order_id"
+        },
+        {
+          "type": "text",
+          "name": "member_id"
+        },
+        {
+          "type": "text",
+          "name": "perk_id"
+        },
+        {
+          "type": "number",
+          "name": "order_total"
+        },
+        {
+          "type": "number",
+          "name": "discount_total"
+        },
+        {
+          "type": "number",
+          "name": "refunded_total"
+        },
+        {
+          "type": "text",
+          "name": "order_currency"
+        },
+        {
+          "type": "text",
+          "name": "payment_method"
+        },
+        {
+          "type": "text",
+          "name": "payment_status"
+        },
+        {
+          "type": "text",
+          "name": "order_note"
+        },
+        {
+          "type": "text",
+          "name": "tags"
+        },
+        {
+          "type": "text",
+          "name": "mfs_order_id"
+        },
+        {
+          "type": "text",
+          "name": "perk_name"
+        },
+        {
+          "type": "text",
+          "name": "category"
+        }
+      ],
+      "outputType": "array"
+    }
   }
 });

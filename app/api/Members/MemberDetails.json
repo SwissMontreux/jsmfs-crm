@@ -1,0 +1,502 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "member_id"
+      },
+      {
+        "type": "text",
+        "name": "offset"
+      },
+      {
+        "type": "text",
+        "name": "limit"
+      },
+      {
+        "type": "text",
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      }
+    ]
+  },
+  "exec": {
+    "steps": [
+      {
+        "name": "",
+        "module": "auth",
+        "action": "restrict",
+        "options": {
+          "provider": "security",
+          "permissions": [
+            "write"
+          ],
+          "loginUrl": "/signin",
+          "forbiddenUrl": "/403-forbidden"
+        }
+      },
+      {
+        "name": "DetailsInfo",
+        "module": "dbconnector",
+        "action": "single",
+        "options": {
+          "connection": "DBConnection",
+          "sql": {
+            "type": "SELECT",
+            "columns": [
+              {
+                "table": "members",
+                "column": "id"
+              },
+              {
+                "table": "members",
+                "column": "created_at"
+              },
+              {
+                "table": "members",
+                "column": "business_line"
+              },
+              {
+                "table": "members",
+                "column": "member_id"
+              },
+              {
+                "table": "members",
+                "column": "first_name"
+              },
+              {
+                "table": "members",
+                "column": "last_name"
+              },
+              {
+                "table": "members",
+                "column": "company_name"
+              },
+              {
+                "table": "members",
+                "column": "email"
+              },
+              {
+                "table": "members",
+                "column": "telephone"
+              },
+              {
+                "table": "members",
+                "column": "address1"
+              },
+              {
+                "table": "members",
+                "column": "address2"
+              },
+              {
+                "table": "members",
+                "column": "town/city",
+                "alias": "town_city"
+              },
+              {
+                "table": "members",
+                "column": "county"
+              },
+              {
+                "table": "members",
+                "column": "psotcode"
+              },
+              {
+                "table": "members",
+                "column": "country"
+              }
+            ],
+            "table": {
+              "name": "members"
+            },
+            "primary": "id",
+            "joins": [],
+            "wheres": {
+              "condition": "AND",
+              "rules": [
+                {
+                  "id": "members.member_id",
+                  "field": "members.member_id",
+                  "type": "string",
+                  "operator": "equal",
+                  "value": "{{$_GET.member_id}}",
+                  "data": {
+                    "table": "members",
+                    "column": "member_id",
+                    "type": "text",
+                    "columnObj": {
+                      "type": "string",
+                      "maxLength": 20,
+                      "primary": false,
+                      "unique": false,
+                      "nullable": true,
+                      "name": "member_id"
+                    }
+                  },
+                  "operation": "="
+                }
+              ],
+              "conditional": null,
+              "valid": true
+            },
+            "query": "SELECT id, created_at, business_line, member_id, first_name, last_name, company_name, email, telephone, address1, address2, \"town/city\" AS town_city, county, psotcode, country\nFROM members\nWHERE member_id = :P1 /* {{$_GET.member_id}} */",
+            "params": [
+              {
+                "operator": "equal",
+                "type": "expression",
+                "name": ":P1",
+                "value": "{{$_GET.member_id}}"
+              }
+            ]
+          }
+        },
+        "output": true,
+        "meta": [
+          {
+            "type": "number",
+            "name": "id"
+          },
+          {
+            "type": "datetime",
+            "name": "created_at"
+          },
+          {
+            "type": "text",
+            "name": "business_line"
+          },
+          {
+            "type": "text",
+            "name": "member_id"
+          },
+          {
+            "type": "text",
+            "name": "first_name"
+          },
+          {
+            "type": "text",
+            "name": "last_name"
+          },
+          {
+            "type": "text",
+            "name": "company_name"
+          },
+          {
+            "type": "text",
+            "name": "email"
+          },
+          {
+            "type": "text",
+            "name": "telephone"
+          },
+          {
+            "type": "text",
+            "name": "address1"
+          },
+          {
+            "type": "text",
+            "name": "address2"
+          },
+          {
+            "type": "text",
+            "name": "town_city"
+          },
+          {
+            "type": "text",
+            "name": "county"
+          },
+          {
+            "type": "text",
+            "name": "psotcode"
+          },
+          {
+            "type": "text",
+            "name": "country"
+          }
+        ],
+        "outputType": "object"
+      },
+      {
+        "name": "OrderDetails",
+        "module": "dbconnector",
+        "action": "paged",
+        "options": {
+          "connection": "DBConnection",
+          "sql": {
+            "type": "SELECT",
+            "columns": [
+              {
+                "table": "orders",
+                "column": "id"
+              },
+              {
+                "table": "orders",
+                "column": "created_at"
+              },
+              {
+                "table": "orders",
+                "column": "business_line"
+              },
+              {
+                "table": "orders",
+                "column": "hubspot_order_id"
+              },
+              {
+                "table": "orders",
+                "column": "member_id"
+              },
+              {
+                "table": "orders",
+                "column": "perk_id"
+              },
+              {
+                "table": "orders",
+                "column": "order_total"
+              },
+              {
+                "table": "orders",
+                "column": "discount_total"
+              },
+              {
+                "table": "orders",
+                "column": "refunded_total"
+              },
+              {
+                "table": "orders",
+                "column": "order_currency"
+              },
+              {
+                "table": "orders",
+                "column": "payment_method"
+              },
+              {
+                "table": "orders",
+                "column": "payment_status"
+              },
+              {
+                "table": "orders",
+                "column": "order_note"
+              },
+              {
+                "table": "orders",
+                "column": "tags"
+              },
+              {
+                "table": "orders",
+                "column": "mfs_order_id"
+              },
+              {
+                "table": "pk",
+                "column": "perk_name"
+              },
+              {
+                "table": "pk",
+                "column": "category"
+              }
+            ],
+            "table": {
+              "name": "orders"
+            },
+            "primary": "id",
+            "joins": [
+              {
+                "table": "perks",
+                "column": "*",
+                "alias": "pk",
+                "type": "INNER",
+                "clauses": {
+                  "condition": "AND",
+                  "rules": [
+                    {
+                      "table": "pk",
+                      "column": "perk_id",
+                      "operator": "equal",
+                      "value": {
+                        "table": "orders",
+                        "column": "perk_id"
+                      },
+                      "operation": "="
+                    }
+                  ]
+                },
+                "primary": "id"
+              }
+            ],
+            "wheres": {
+              "condition": "AND",
+              "rules": [
+                {
+                  "id": "orders.member_id",
+                  "field": "orders.member_id",
+                  "type": "string",
+                  "operator": "equal",
+                  "value": "{{$_GET.member_id}}",
+                  "data": {
+                    "table": "orders",
+                    "column": "member_id",
+                    "type": "text",
+                    "columnObj": {
+                      "type": "string",
+                      "maxLength": 20,
+                      "primary": false,
+                      "unique": false,
+                      "nullable": true,
+                      "name": "member_id"
+                    }
+                  },
+                  "operation": "="
+                }
+              ],
+              "conditional": null,
+              "valid": true
+            },
+            "orders": [
+              {
+                "table": "orders",
+                "column": "id",
+                "direction": "DESC"
+              }
+            ],
+            "query": "SELECT orders.id, orders.created_at, orders.business_line, orders.hubspot_order_id, orders.member_id, orders.perk_id, orders.order_total, orders.discount_total, orders.refunded_total, orders.order_currency, orders.payment_method, orders.payment_status, orders.order_note, orders.tags, orders.mfs_order_id, pk.perk_name, pk.category\nFROM orders\nINNER JOIN perks AS pk ON (pk.perk_id = orders.perk_id)\nWHERE orders.member_id = :P1 /* {{$_GET.member_id}} */\nORDER BY orders.id DESC",
+            "params": [
+              {
+                "operator": "equal",
+                "type": "expression",
+                "name": ":P1",
+                "value": "{{$_GET.member_id}}"
+              }
+            ]
+          }
+        },
+        "output": true,
+        "meta": [
+          {
+            "name": "offset",
+            "type": "number"
+          },
+          {
+            "name": "limit",
+            "type": "number"
+          },
+          {
+            "name": "total",
+            "type": "number"
+          },
+          {
+            "name": "page",
+            "type": "object",
+            "sub": [
+              {
+                "name": "offset",
+                "type": "object",
+                "sub": [
+                  {
+                    "name": "first",
+                    "type": "number"
+                  },
+                  {
+                    "name": "prev",
+                    "type": "number"
+                  },
+                  {
+                    "name": "next",
+                    "type": "number"
+                  },
+                  {
+                    "name": "last",
+                    "type": "number"
+                  }
+                ]
+              },
+              {
+                "name": "current",
+                "type": "number"
+              },
+              {
+                "name": "total",
+                "type": "number"
+              }
+            ]
+          },
+          {
+            "name": "data",
+            "type": "array",
+            "sub": [
+              {
+                "type": "number",
+                "name": "id"
+              },
+              {
+                "type": "datetime",
+                "name": "created_at"
+              },
+              {
+                "type": "text",
+                "name": "business_line"
+              },
+              {
+                "type": "text",
+                "name": "hubspot_order_id"
+              },
+              {
+                "type": "text",
+                "name": "member_id"
+              },
+              {
+                "type": "text",
+                "name": "perk_id"
+              },
+              {
+                "type": "number",
+                "name": "order_total"
+              },
+              {
+                "type": "number",
+                "name": "discount_total"
+              },
+              {
+                "type": "number",
+                "name": "refunded_total"
+              },
+              {
+                "type": "text",
+                "name": "order_currency"
+              },
+              {
+                "type": "text",
+                "name": "payment_method"
+              },
+              {
+                "type": "text",
+                "name": "payment_status"
+              },
+              {
+                "type": "text",
+                "name": "order_note"
+              },
+              {
+                "type": "text",
+                "name": "tags"
+              },
+              {
+                "type": "text",
+                "name": "mfs_order_id"
+              },
+              {
+                "type": "text",
+                "name": "perk_name"
+              },
+              {
+                "type": "text",
+                "name": "category"
+              }
+            ]
+          }
+        ],
+        "outputType": "object"
+      }
+    ]
+  }
+}

@@ -1,0 +1,200 @@
+<!-- Wappler include head-page="layouts/main" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="membersprofile" appConnect="local" components="{dmxStateManagement:{},dmxBootstrap5Navigation:{},dmxDataTraversal:{},dmxFormatter:{}}" -->
+<meta name="ac:route" content="/members-profile/:id/:member">
+<dmx-query-manager id="qm"></dmx-query-manager>
+<dmx-serverconnect id="scMemberDetails" url="/api/Members/MemberDetails" dmx-on:success="varTitle.setValue('Details')" dmx-param:member_id="<%= $_PARAM.id %>"></dmx-serverconnect>
+<dmx-data-view id="dvMemberDetails" dmx-bind:data="scMemberDetails.data.OrderDetails.data" filter="(category.lowercase().contains(Search.searchinput.value.lowercase())||perk_name.lowercase().contains(Search.searchinput.value.lowercase())||mfs_order_id.lowercase().contains(Search.searchinput.value.lowercase())||hubspot_order_id.lowercase().contains(Search.searchinput.value.lowercase())||payment_method.lowercase().contains(Search.searchinput.value.lowercase())||order_currency.lowercase().contains(Search.searchinput.value.lowercase())||payment_status.lowercase().contains(Search.searchinput.value.lowercase())||order_note.lowercase().contains(Search.searchinput.value.lowercase())||tags.lowercase().contains(Search.searchinput.value.lowercase()))"></dmx-data-view>
+
+<div class="content-wrapper">
+    <div class="content">
+        <!-- Card Profile -->
+        <div class="card card-default card-profile">
+
+            <div class="card-header-bg" style="background-image:url(assets/img/user/user-bg-01.jpg)"></div>
+
+            <div class="card-body card-profile-body">
+
+                <div class="profile-avata">
+                    <img class="rounded-circle" src="images/user/user-md-01.jpg" alt="Avata Image">
+                    <span class="h5 d-block mt-3 mb-2">{{scMemberDetails.data.DetailsInfo.first_name}} {{scMemberDetails.data.DetailsInfo.last_name}}</span>
+                    <span class="d-block">{{scMemberDetails.data.DetailsInfo.email}}</span>
+                </div>
+
+                <!-- <ul class="nav nav-profile-follow">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <span class="h5 d-block">1503</span>
+                            <span class="text-color d-block">Friends</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <span class="h5 d-block">2905</span>
+                            <span class="text-color d-block">Followers</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <span class="h5 d-block">1200</span>
+                            <span class="text-color d-block">Following</span>
+                        </a>
+                    </li>
+
+                </ul> -->
+
+                <!-- <div class="profile-button">
+                    <a class="btn btn-primary btn-pill" href="user-planing-settings.html">Upgrade Plan</a>
+                </div> -->
+
+            </div>
+
+            <!-- <div class="card-footer card-profile-footer">
+                <ul class="nav nav-border-top justify-content-center">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="user-profile.html">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="user-activities.html">Activities</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="user-profile-settings.html">Settings</a>
+                    </li>
+
+                </ul>
+            </div> -->
+
+        </div>
+
+        <div class="row">
+            <div class="col-xl-3 col-md-6">
+                <div class="card card-default">
+                    <div class="d-flex p-5">
+                        <div class="icon-md bg-secondary rounded-circle mr-3">
+                            <i class="mdi mdi-account-plus-outline"></i>
+                        </div>
+                        <div class="text-left">
+                            <span class="h2 d-block">{{content.dvMemberDetails.data.length}}</span>
+                            <p>Total Orders</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="card card-default">
+                    <div class="d-flex p-5">
+                        <div class="icon-md bg-success rounded-circle mr-3">
+                            <i class="mdi mdi-table-edit"></i>
+                        </div>
+                        <div class="text-left">
+                            <span class="h2 d-block">{{dvMemberDetails.data.where(`payment_status`, 'completed', '==').length}}</span>
+                            <p>Order Completed</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="card card-default">
+                    <div class="d-flex p-5">
+                        <div class="icon-md bg-primary rounded-circle mr-3">
+                            <i class="mdi mdi-content-save-edit-outline"></i>
+                        </div>
+                        <div class="text-left">
+                            <span class="h2 d-block">{{dvMemberDetails.data.where(`payment_status`, 'processing', '==').length}}</span>
+                            <p>Order Processing</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="card card-default">
+                    <div class="d-flex p-5">
+                        <div class="icon-md bg-info rounded-circle mr-3">
+                            <i class="mdi mdi-bell"></i>
+                        </div>
+                        <div class="text-left">
+                            <span class="h2 d-block">{{dvMemberDetails.data.where(`payment_status`, 'failed', '==').length}}</span>
+                            <p>Order Failed</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="card card-default">
+                    <div class="d-flex p-5">
+                        <div class="icon-md bg-info rounded-circle mr-3">
+                            <i class="mdi mdi-bell"></i>
+                        </div>
+                        <div class="text-left">
+                            <span class="h2 d-block">{{dvMemberDetails.data.sum(order_total.split('$')[1])}}</span>
+                            <p>Total Order Amount</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table Product -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-default">
+                    <div class="card-header">
+                        <h2>Order History</h2>
+                        <!-- <div class="dropdown">
+                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Yearly Chart
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="card-body" style="overflow: auto;">
+                        <table id="productsTable" class="table table-hover table-product" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th class="sorting" dmx-on:click="qm.set('sort','$index+1');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='$index+1' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='$index+1' && qm.data.dir == 'desc'">SL. No.</th>
+                                    <th class="sorting" dmx-on:click="qm.set('sort','created_at');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='created_at' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='created_at' && qm.data.dir == 'desc'">Created at</th>
+                                    <th class="sorting" dmx-on:click="qm.set('sort','business_line');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='business_line' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='business_line' && qm.data.dir == 'desc'">Business line</th>
+                                    <th class="sorting" dmx-on:click="qm.set('sort','mfs_order_id');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='mfs_order_id' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='mfs_order_id' && qm.data.dir == 'desc'">Mfs order</th>
+                                    <th class="sorting" dmx-on:click="qm.set('sort','category');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='category' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='category' && qm.data.dir == 'desc'">Category</th>
+                                    <th class="sorting" dmx-on:click="qm.set('sort','perk_name');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='perk_name' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='perk_name' && qm.data.dir == 'desc'">Perk name</th>
+                                    <th class="sorting" dmx-on:click="qm.set('sort','hubspot_order_id');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='hubspot_order_id' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='hubspot_order_id' && qm.data.dir == 'desc'">Hubspot order</th>
+                                    <th class="sorting" dmx-on:click="qm.set('sort','order_total');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='order_total' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='order_total' && qm.data.dir == 'desc'">Order total</th>
+                                    <th class="sorting" dmx-on:click="qm.set('sort','discount_total');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='discount_total' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='discount_total' && qm.data.dir == 'desc'">Discount total</th>
+                                    <th class="sorting" dmx-on:click="qm.set('sort','refunded_total');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='refunded_total' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='refunded_total' && qm.data.dir == 'desc'">Refunded total</th>
+                                    <th class="sorting" dmx-on:click="qm.set('sort','order_currency');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='order_currency' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='order_currency' && qm.data.dir == 'desc'">Order currency</th>
+                                    <th class="sorting" dmx-on:click="qm.set('sort','payment_method');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='payment_method' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='payment_method' && qm.data.dir == 'desc'">Payment method</th>
+                                    <th class="sorting" dmx-on:click="qm.set('sort','payment_status');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='payment_status' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='payment_status' && qm.data.dir == 'desc'">Payment status</th>
+                                    <th class="sorting" dmx-on:click="qm.set('sort','order_note');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='order_note' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='order_note' && qm.data.dir == 'desc'">Order note</th>
+                                    <th class="sorting" dmx-on:click="qm.set('sort','tags');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='tags' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='tags' && qm.data.dir == 'desc'">Tags</th>
+                                </tr>
+                            </thead>
+                            <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="dvMemberDetails.data" id="tableRepeat2" dmx-state="qm" dmx-sort="sort" dmx-order="dir" key="id">
+                                <tr>
+                                    <td dmx-text="$index+1"></td>
+                                    <td dmx-text="created_at.formatDate('yyyy-MMM-dd hh:mm A')"></td>
+                                    <td dmx-text="business_line"></td>
+                                    <td dmx-text="mfs_order_id"></td>
+                                    <td dmx-text="category"></td>
+                                    <td dmx-text="perk_name"></td>
+                                    <td dmx-text="hubspot_order_id"></td>
+                                    <td dmx-text="order_total"></td>
+                                    <td dmx-text="discount_total"></td>
+                                    <td dmx-text="refunded_total"></td>
+                                    <td dmx-text="order_currency"></td>
+                                    <td dmx-text="payment_method"></td>
+                                    <td class="text-center"><b class="text-black p-1" dmx-class:bg-success="(payment_status=='completed')" dmx-class:bg-info-dark="(payment_status=='processing')" dmx-class:bg-danger="(payment_status=='failed')" style="border-radius: 10px;">{{payment_status}}</b></td>
+                                    <td dmx-text="order_note"></td>
+                                    <td dmx-text="tags"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

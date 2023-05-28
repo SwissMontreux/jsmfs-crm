@@ -9,6 +9,7 @@
             <thead>
                 <tr>
                     <th class="sorting" dmx-on:click="qm.set('sort','$index+1');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='$index+1' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='$index+1' && qm.data.dir == 'desc'">Sl. No.</th>
+                    <th class="sorting">Details</th>
                     <th class="sorting" dmx-on:click="qm.set('sort','created_at');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='created_at' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='created_at' && qm.data.dir == 'desc'">Created at</th>
                     <th class="sorting" dmx-on:click="qm.set('sort','member_id');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='member_id' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='member_id' && qm.data.dir == 'desc'">Member</th>
                     <th class="sorting" dmx-on:click="qm.set('sort','first_name');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='first_name' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='first_name' && qm.data.dir == 'desc'">First name</th>
@@ -27,6 +28,9 @@
             <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="dvMFSMembers.data" id="tableRepeat2" dmx-state="qm" dmx-sort="sort" dmx-order="dir">
                 <tr>
                     <td dmx-text="$index+1"></td>
+                    <td class="text-center">
+                        <a class="text-black" dmx-bind:href="'/members-profile/'+member_id+'/'+first_name"><i class="mdi mdi-eye"></i></a>
+                    </td>
                     <td dmx-text="created_at"></td>
                     <td dmx-text="member_id"></td>
                     <td dmx-text="first_name"></td>
