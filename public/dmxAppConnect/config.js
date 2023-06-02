@@ -459,6 +459,15 @@ dmx.config({
         }
       ],
       "outputType": "array"
+    },
+    "repeat1": {
+      "meta": [
+        {
+          "type": "text",
+          "name": "category"
+        }
+      ],
+      "outputType": "array"
     }
   },
   "allmembers": {

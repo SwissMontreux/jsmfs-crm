@@ -58,6 +58,10 @@
               {
                 "table": "perks",
                 "column": "category"
+              },
+              {
+                "table": "perks",
+                "column": "cat_id"
               }
             ],
             "table": {
@@ -68,11 +72,12 @@
             "orders": [
               {
                 "table": "perks",
-                "column": "id",
-                "direction": "DESC"
+                "column": "category",
+                "direction": "ASC",
+                "recid": 1
               }
             ],
-            "query": "SELECT id, perk_id, perk_name, category\nFROM perks\nORDER BY id DESC",
+            "query": "SELECT id, perk_id, perk_name, category, cat_id\nFROM perks\nORDER BY category ASC",
             "params": []
           }
         },
@@ -145,6 +150,10 @@
               {
                 "type": "text",
                 "name": "category"
+              },
+              {
+                "type": "number",
+                "name": "cat_id"
               }
             ]
           }

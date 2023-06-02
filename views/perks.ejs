@@ -1,7 +1,8 @@
 <!-- Wappler include head-page="layouts/main" fontawesome_5="cdn" bootstrap5="local" is="dmx-app" id="perks" appConnect="local" components="{dmxStateManagement:{},dmxDataTraversal:{},dmxBootstrap5TableGenerator:{}}" -->
 <meta name="ac:route" content="/perks">
 <dmx-query-manager id="qm"></dmx-query-manager>
-<dmx-serverconnect id="scPerks" url="/api/Perks/Perks" dmx-param:offset="qm.data.offset" dmx-param:limit="qm.data.limit" dmx-param:sort="qm.data.sort" dmx-param:dir="qm.data.dir" dmx-on:success="varTitle.setValue('Perks')"></dmx-serverconnect>
+<!-- <dmx-serverconnect id="scPerksCategory" url="/api/Perks/PerksByCate" dmx-on:success="scPerks.load({category: content.scPerksCategory.data.PerksCategory[$index].category},true)"></dmx-serverconnect> -->
+<dmx-serverconnect id="scPerks" url="/api/Perks/Perks" dmx-param:offset="qm.data.offset" dmx-param:limit="qm.data.limit" dmx-param:sort="qm.data.sort" dmx-param:dir="qm.data.dir"></dmx-serverconnect>
 <dmx-data-view id="dvPerks" dmx-bind:data="scPerks.data.queryParks.data" filter="(perk_name.lowercase().contains(Search.searchinput.value.lowercase())||perk_id.lowercase().contains(Search.searchinput.value.lowercase())||category.lowercase().contains(Search.searchinput.value.lowercase()))"></dmx-data-view>
 <div class="container">
     <div class="table-responsive">
@@ -15,7 +16,7 @@
                 </tr>
             </thead>
             <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="dvPerks.data" id="tableRepeat2" dmx-state="qm" dmx-sort="sort" dmx-order="dir" key="id">
-                <tr>
+                <tr dmx-style:background="(cat_id==1)?'#ff98008a':(cat_id==2)?'#f443368c':(cat_id==3)?'#00968873':(cat_id==4)?'#ffc10794':(cat_id==5)?'#e91e6373':(cat_id==6)?'#3f51b585':''">
                     <td dmx-text="$index+1"></td>
                     <td dmx-text="perk_id"></td>
                     <td dmx-text="perk_name"></td>
