@@ -154,7 +154,7 @@
                 "primary": "id"
               }
             ],
-            "query": "SELECT orders.id, orders.created_at, memb.first_name, memb.last_name, pk.perk_name, orders.mfs_order_id, orders.hubspot_order_id, orders.order_total, orders.discount_total, orders.refunded_total, orders.order_currency, orders.payment_method, orders.payment_status, orders.order_note, orders.tags\nFROM orders\nLEFT JOIN members AS memb ON (memb.member_id = orders.member_id) LEFT JOIN perks AS pk ON (pk.perk_id = orders.perk_id)\nWHERE orders.business_line = :P1 /* {{'mfs'}} */\nORDER BY orders.id DESC",
+            "query": "SELECT orders.id, orders.created_at, memb.first_name, memb.last_name, pk.perk_name, orders.mfs_order_id, orders.hubspot_order_id, orders.order_total, orders.discount_total, orders.refunded_total, orders.order_currency, orders.payment_method, orders.payment_status, orders.order_note, orders.tags\nFROM orders\nLEFT JOIN members AS memb ON (memb.member_id = orders.member_id) LEFT JOIN perks AS pk ON (pk.perk_id = orders.perk_id)\nWHERE orders.business_line = :P1 /* {{'mfs'}} */\nORDER BY pk.perk_name ASC",
             "params": [
               {
                 "operator": "equal",
@@ -193,10 +193,9 @@
             },
             "orders": [
               {
-                "table": "orders",
-                "column": "id",
-                "direction": "DESC",
-                "recid": 1
+                "table": "pk",
+                "column": "perk_name",
+                "direction": "ASC"
               }
             ]
           }

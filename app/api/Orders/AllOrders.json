@@ -166,13 +166,13 @@
                 "primary": "id"
               }
             ],
-            "query": "SELECT orders.id, orders.created_at, orders.business_line, orders.mfs_order_id, mb.first_name, mb.last_name, orders.hubspot_order_id, pk.perk_name, orders.order_total, orders.discount_total, orders.refunded_total, orders.order_currency, orders.payment_method, orders.payment_status, orders.order_note, orders.tags, orders.member_id, orders.perk_id\nFROM orders\nLEFT JOIN members AS mb ON (mb.member_id = orders.member_id) LEFT JOIN perks AS pk ON (pk.perk_id = orders.perk_id)\nORDER BY orders.id DESC",
+            "query": "SELECT orders.id, orders.created_at, orders.business_line, orders.mfs_order_id, mb.first_name, mb.last_name, orders.hubspot_order_id, pk.perk_name, orders.order_total, orders.discount_total, orders.refunded_total, orders.order_currency, orders.payment_method, orders.payment_status, orders.order_note, orders.tags, orders.member_id, orders.perk_id\nFROM orders\nLEFT JOIN members AS mb ON (mb.member_id = orders.member_id) LEFT JOIN perks AS pk ON (pk.perk_id = orders.perk_id)\nORDER BY pk.perk_name ASC",
             "params": [],
             "orders": [
               {
-                "table": "orders",
-                "column": "id",
-                "direction": "DESC"
+                "table": "pk",
+                "column": "perk_name",
+                "direction": "ASC"
               }
             ]
           }
