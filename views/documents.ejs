@@ -3,12 +3,13 @@
 <dmx-query-manager id="qm"></dmx-query-manager>
 <dmx-serverconnect id="scDocuments" dmx-param:offset="content.qm.data.offset" dmx-param:limit="10000" dmx-param:sort="content.qm.data.sort" dmx-param:dir="content.qm.data.dir" dmx-on:success="varTitle.setValue('Documents')" url="/api/Documents/Document"></dmx-serverconnect>
 <dmx-data-view id="dvDocuments" dmx-bind:data="content.scDocuments.data.query.data" filter="(created_at.lowercase().contains(Search.searchinput.value.lowercase())||document_id.lowercase().contains(Search.searchinput.value.lowercase())||document_name.lowercase().contains(Search.searchinput.value.lowercase())||member_id.lowercase().contains(Search.searchinput.value.lowercase())||first_name.lowercase().contains(Search.searchinput.value.lowercase())||doc_type.lowercase().contains(Search.searchinput.value.lowercase())||last_name.lowercase().contains(Search.searchinput.value.lowercase()))"></dmx-data-view>
-<div class="container">
+<div class="col">
     <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover table-sm">
             <thead>
                 <tr>
                     <th class="sorting" dmx-on:click="qm.set('sort','$index+1');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='$index+1' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='$index+1' && qm.data.dir == 'desc'">Sl. No.</th>
+                    <th>Action</th>
                     <th class="sorting" dmx-on:click="qm.set('sort','document_name');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='document_name' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='document_name' && qm.data.dir == 'desc'">Document Name</th>
                     <th class="sorting" dmx-on:click="qm.set('sort','doc_type');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='doc_type' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='doc_type' && qm.data.dir == 'desc'">Type</th>
                     <th class="sorting" dmx-on:click="qm.set('sort','first_name');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='first_name' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='first_name' && qm.data.dir == 'desc'">First Name</th>
@@ -20,6 +21,9 @@
             <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="dvDocuments.data" id="tableRepeat1" dmx-state="qm" dmx-sort="sort" dmx-order="dir">
                 <tr>
                     <td dmx-text="$index+1"></td>
+                    <td class="text-center">
+                        <a class="text-black" href="#"><i class="mdi mdi-pencil-lock"></i></a>
+                    </td>
                     <td dmx-text="document_name"></td>
                     <td dmx-text="doc_type"></td>
                     <td dmx-text="first_name"></td>

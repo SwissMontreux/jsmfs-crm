@@ -44,12 +44,40 @@
             "type": "SELECT",
             "columns": [
               {
-                "table": "perks",
+                "table": "orders",
                 "column": "id"
               },
               {
-                "table": "perks",
+                "table": "orders",
+                "column": "hubspot_order_id"
+              },
+              {
+                "table": "orders",
+                "column": "mfs_order_id"
+              },
+              {
+                "table": "orders",
+                "column": "business_line"
+              },
+              {
+                "table": "orders",
                 "column": "perk_id"
+              },
+              {
+                "table": "orders",
+                "column": "order_total"
+              },
+              {
+                "table": "orders",
+                "column": "order_currency"
+              },
+              {
+                "table": "orders",
+                "column": "payment_method"
+              },
+              {
+                "table": "orders",
+                "column": "payment_status"
               },
               {
                 "table": "perks",
@@ -60,15 +88,38 @@
                 "column": "category"
               },
               {
-                "table": "perks",
-                "column": "cat_id"
+                "table": "orders",
+                "column": "created_at"
               }
             ],
             "table": {
-              "name": "perks"
+              "name": "orders"
             },
             "primary": "id",
-            "joins": [],
+            "joins": [
+              {
+                "table": "perks",
+                "column": "*",
+                "alias": "perks",
+                "type": "LEFT",
+                "clauses": {
+                  "condition": "AND",
+                  "rules": [
+                    {
+                      "table": "perks",
+                      "column": "perk_id",
+                      "operator": "equal",
+                      "value": {
+                        "table": "orders",
+                        "column": "perk_id"
+                      },
+                      "operation": "="
+                    }
+                  ]
+                },
+                "primary": "id"
+              }
+            ],
             "orders": [
               {
                 "table": "perks",
@@ -77,7 +128,7 @@
                 "recid": 1
               }
             ],
-            "query": "SELECT id, perk_id, perk_name, category, cat_id\nFROM perks\nORDER BY category ASC",
+            "query": "SELECT orders.id, orders.hubspot_order_id, orders.mfs_order_id, orders.business_line, orders.perk_id, orders.order_total, orders.order_currency, orders.payment_method, orders.payment_status, perks.perk_name, perks.category, orders.created_at\nFROM orders\nLEFT JOIN perks AS perks ON (perks.perk_id = orders.perk_id)\nORDER BY perks.category ASC",
             "params": []
           }
         },
@@ -141,7 +192,35 @@
               },
               {
                 "type": "text",
+                "name": "hubspot_order_id"
+              },
+              {
+                "type": "text",
+                "name": "mfs_order_id"
+              },
+              {
+                "type": "text",
+                "name": "business_line"
+              },
+              {
+                "type": "text",
                 "name": "perk_id"
+              },
+              {
+                "type": "number",
+                "name": "order_total"
+              },
+              {
+                "type": "text",
+                "name": "order_currency"
+              },
+              {
+                "type": "text",
+                "name": "payment_method"
+              },
+              {
+                "type": "text",
+                "name": "payment_status"
               },
               {
                 "type": "text",
@@ -152,8 +231,8 @@
                 "name": "category"
               },
               {
-                "type": "number",
-                "name": "cat_id"
+                "type": "datetime",
+                "name": "created_at"
               }
             ]
           }

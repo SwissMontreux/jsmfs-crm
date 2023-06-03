@@ -3,7 +3,7 @@
 <dmx-query-manager id="qm"></dmx-query-manager>
 <dmx-serverconnect id="scAllMembers" url="/api/Members/AllMembers" dmx-param:offset="content.qm.data.offset" dmx-param:limit="10000" dmx-param:dir="content.qm.data.dir" dmx-param:sort="content.qm.data.sort" dmx-on:success="varTitle.setValue('All Members')"></dmx-serverconnect>
 <dmx-data-view id="dvAllMembers" dmx-bind:data="scAllMembers.data.AllMembers.data" filter="(created_at.lowercase().contains(Search.searchinput.value.lowercase())||business_line.lowercase().contains(Search.searchinput.value.lowercase())||first_name.lowercase().contains(Search.searchinput.value.lowercase())||last_name.lowercase().contains(Search.searchinput.value.lowercase())||company_name.lowercase().contains(Search.searchinput.value.lowercase())||email.lowercase().contains(Search.searchinput.value.lowercase())||telephone.lowercase().contains(Search.searchinput.value.lowercase())||address1.lowercase().contains(Search.searchinput.value.lowercase()))"></dmx-data-view>
-<div class="container">
+<div class="col">
     <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover table-sm">
             <thead>

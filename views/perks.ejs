@@ -2,27 +2,44 @@
 <meta name="ac:route" content="/perks">
 <dmx-query-manager id="qm"></dmx-query-manager>
 <!-- <dmx-serverconnect id="scPerksCategory" url="/api/Perks/PerksByCate" dmx-on:success="scPerks.load({category: content.scPerksCategory.data.PerksCategory[$index].category},true)"></dmx-serverconnect> -->
-<dmx-serverconnect id="scPerks" url="/api/Perks/Perks" dmx-param:offset="qm.data.offset" dmx-param:limit="qm.data.limit" dmx-param:sort="qm.data.sort" dmx-param:dir="qm.data.dir"></dmx-serverconnect>
+<dmx-serverconnect id="scPerks" url="/api/Perks/Perks" dmx-param:offset="qm.data.offset" dmx-param:limit="qm.data.limit" dmx-param:sort="qm.data.sort" dmx-param:dir="qm.data.dir" dmx-on:success="varTitle.setValue('Group by Perks')"></dmx-serverconnect>
 <dmx-data-view id="dvPerks" dmx-bind:data="scPerks.data.queryParks.data" filter="(perk_name.lowercase().contains(Search.searchinput.value.lowercase())||perk_id.lowercase().contains(Search.searchinput.value.lowercase())||category.lowercase().contains(Search.searchinput.value.lowercase()))"></dmx-data-view>
-<div class="container">
+<div class="col">
     <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover table-sm">
             <thead>
                 <tr>
-                    <th class="sorting" dmx-on:click="qm.set('sort','$index+1');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='$index+1' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='$index+1' && qm.data.dir == 'desc'">SL. No.</th>
-                    <th class="sorting" dmx-on:click="qm.set('sort','perk_id');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='perk_id' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='perk_id' && qm.data.dir == 'desc'">Perk</th>
+                    <th class="sorting" dmx-on:click="qm.set('sort','$index+1');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='$index+1' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='$index+1' && qm.data.dir == 'desc'">Sl. No.</th>
+                    <th class="sorting" dmx-on:click="qm.set('sort','category');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='category' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='category' && qm.data.dir == 'desc'">Perk Category</th>
                     <th class="sorting" dmx-on:click="qm.set('sort','perk_name');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='perk_name' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='perk_name' && qm.data.dir == 'desc'">Perk name</th>
-                    <th class="sorting" dmx-on:click="qm.set('sort','category');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='category' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='category' && qm.data.dir == 'desc'">Category</th>
+                    <th class="sorting" dmx-on:click="qm.set('sort','hubspot_order_id');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='hubspot_order_id' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='hubspot_order_id' && qm.data.dir == 'desc'">Hubspot order</th>
+                    <th class="sorting" dmx-on:click="qm.set('sort','mfs_order_id');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='mfs_order_id' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='mfs_order_id' && qm.data.dir == 'desc'">Mfs order</th>
+                    <th class="sorting" dmx-on:click="qm.set('sort','business_line');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='business_line' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='business_line' && qm.data.dir == 'desc'">Business line</th>
+                    <th class="sorting" dmx-on:click="qm.set('sort','perk_id');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='perk_id' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='perk_id' && qm.data.dir == 'desc'">Perk</th>
+                    <th class="sorting" dmx-on:click="qm.set('sort','order_total');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='order_total' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='order_total' && qm.data.dir == 'desc'">Order total</th>
+                    <th class="sorting" dmx-on:click="qm.set('sort','order_currency');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='order_currency' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='order_currency' && qm.data.dir == 'desc'">Order currency</th>
+                    <th class="sorting" dmx-on:click="qm.set('sort','payment_method');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='payment_method' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='payment_method' && qm.data.dir == 'desc'">Payment method</th>
+                    <th class="sorting" dmx-on:click="qm.set('sort','payment_status');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='payment_status' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='payment_status' && qm.data.dir == 'desc'">Payment status</th>
+                    <th class="sorting" dmx-on:click="qm.set('sort','created_at');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='created_at' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='created_at' && qm.data.dir == 'desc'">Created at</th>
                 </tr>
             </thead>
-            <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="dvPerks.data" id="tableRepeat2" dmx-state="qm" dmx-sort="sort" dmx-order="dir" key="id">
-                <tr dmx-style:background="(cat_id==1)?'#ff98008a':(cat_id==2)?'#f443368c':(cat_id==3)?'#00968873':(cat_id==4)?'#ffc10794':(cat_id==5)?'#e91e6373':(cat_id==6)?'#3f51b585':''">
+            <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="dvPerks.data" id="tableRepeat1" dmx-state="qm" dmx-sort="sort" dmx-order="dir">
+                <tr>
                     <td dmx-text="$index+1"></td>
-                    <td dmx-text="perk_id"></td>
-                    <td dmx-text="perk_name"></td>
                     <td dmx-text="category"></td>
+                    <td dmx-text="perk_name"></td>
+                    <td dmx-text="hubspot_order_id"></td>
+                    <td dmx-text="mfs_order_id"></td>
+                    <td dmx-text="business_line"></td>
+                    <td dmx-text="perk_id"></td>
+                    <td dmx-text="order_total"></td>
+                    <td dmx-text="order_currency"></td>
+                    <td dmx-text="payment_method"></td>
+                    <td dmx-text="payment_status"></td>
+                    <td dmx-text="created_at.formatDate('yyyy-MMM-dd hh:mm A')"></td>
                 </tr>
             </tbody>
         </table>
     </div>
+
 </div>

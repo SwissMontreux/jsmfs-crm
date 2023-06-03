@@ -4,7 +4,7 @@
 <dmx-serverconnect id="scMFSOrders" url="/api/Orders/MFSOrders" dmx-param:limit="10000" dmx-param:offset="qm.data.offset" dmx-param:sort="qm.data.sort" dmx-param:dir="qm.data.dir" dmx-on:success="varTitle.setValue('MFS Orders')"></dmx-serverconnect>
 <dmx-data-view id="dvMfsOrders" dmx-bind:data="scMFSOrders.data.MfsOrders.data" filter="(first_name.lowercase().contains(Search.searchinput.value.lowercase())||last_name.lowercase().contains(Search.searchinput.value.lowercase())||perk_name.lowercase().contains(Search.searchinput.value.lowercase())||mfs_order_id.lowercase().contains(Search.searchinput.value.lowercase())||hubspot_order_id.lowercase().contains(Search.searchinput.value.lowercase())||payment_method.lowercase().contains(Search.searchinput.value.lowercase())||order_currency.lowercase().contains(Search.searchinput.value.lowercase())||payment_status.lowercase().contains(Search.searchinput.value.lowercase())||order_note.lowercase().contains(Search.searchinput.value.lowercase())||tags.lowercase().contains(Search.searchinput.value.lowercase()))"></dmx-data-view>
 <!-- first_name.lowercase().contains(Search.searchinput.value.lowercase())||last_name.contains(Search.searchinput.value.lowercase())||perk_name.lowercase().contains(Search.searchinput.value.lowercase()) -->
-<div class="container">
+<div class="col">
     <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover table-sm">
             <thead>
