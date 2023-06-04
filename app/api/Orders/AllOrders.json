@@ -172,7 +172,8 @@
               {
                 "table": "pk",
                 "column": "perk_name",
-                "direction": "ASC"
+                "direction": "ASC",
+                "recid": 1
               }
             ]
           }
