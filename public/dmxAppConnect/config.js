@@ -1023,6 +1023,43 @@ dmx.config({
         }
       ],
       "outputType": "array"
+    },
+    "ddDocumentDetails": {
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "text",
+          "name": "document_name"
+        },
+        {
+          "type": "text",
+          "name": "member_id"
+        },
+        {
+          "type": "text",
+          "name": "visible"
+        },
+        {
+          "type": "text",
+          "name": "doc_type"
+        },
+        {
+          "type": "text",
+          "name": "rm_tracking"
+        },
+        {
+          "type": "datetime",
+          "name": "created_at"
+        },
+        {
+          "type": "text",
+          "name": "document_location"
+        }
+      ],
+      "outputType": "array"
     }
   }
 });

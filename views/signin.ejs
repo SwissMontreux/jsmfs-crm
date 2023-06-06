@@ -10,7 +10,7 @@
                 <div class="col-md-7">
                     <h3>Login to <strong>JSMFS-CRM</strong></h3>
                     <p class="mb-4">Don't have an account yet?&emsp;<a href="">SignUp</a></p>
-                    <form method="post" is="dmx-serverconnect-form" id="scFormLogin" action="/api/Users/SignIn" dmx-on:success="notifies1.success('Login Success');scFormLogin.reset(true);browser1.goto('/documents')" dmx-on:error="notifies1.warning('Unauthorized User')" dmx-on:unauthorized="notifies1.warning('Unauthorized User')" dmx-on:forbidden="notifies1.warning('Unauthorized User')">
+                    <form method="post" is="dmx-serverconnect-form" id="scFormLogin" action="/api/Users/SignIn" dmx-on:success="notifies1.success('Login Success');scFormLogin.reset(true);browser1.goto('/all-members')" dmx-on:error="notifies1.warning('Unauthorized User')" dmx-on:unauthorized="notifies1.warning('Unauthorized User')" dmx-on:forbidden="notifies1.warning('Unauthorized User')">
                         <div class="form-group first">
                             <label for="username">Username</label>
                             <input type="text" class="form-control" placeholder="your-email@gmail.com" id="username" name="username" required>

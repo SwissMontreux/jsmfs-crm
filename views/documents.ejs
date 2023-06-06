@@ -19,6 +19,7 @@
                     <th class="sorting" dmx-on:click="qm.set('sort','last_name');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='last_name' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='last_name' && qm.data.dir == 'desc'">Last Name</th>
                     <th class="sorting" dmx-on:click="qm.set('sort','created_at');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='created_at' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='created_at' && qm.data.dir == 'desc'">Created At</th>
                     <th class="sorting" dmx-on:click="qm.set('sort','document_location');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='document_location' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='document_location' && qm.data.dir == 'desc'">Document location</th>
+                    <th class="sorting">Action</th>
                 </tr>
             </thead>
             <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="dvDocuments.data" id="tableRepeat1" dmx-state="qm" dmx-sort="sort" dmx-order="dir">
@@ -33,6 +34,9 @@
                     <td dmx-text="last_name"></td>
                     <td dmx-text="created_at.formatDate('yyyy-MMM-dd hh:mm A')"></td>
                     <td><a href="#" dmx-bind:href="document_location" target="_blank"><img src="/assets/images/pdf.jpg" width="20"></a></td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-warning btn-pill py-0"><i class="mdi mdi-remove"></i></button>
+                    </td>
                 </tr>
             </tbody>
         </table>

@@ -496,6 +496,191 @@
           }
         ],
         "outputType": "object"
+      },
+      {
+        "name": "MembersDoc",
+        "module": "dbconnector",
+        "action": "paged",
+        "options": {
+          "connection": "DBConnection",
+          "sql": {
+            "type": "SELECT",
+            "columns": [
+              {
+                "table": "documents",
+                "column": "id"
+              },
+              {
+                "table": "documents",
+                "column": "document_name"
+              },
+              {
+                "table": "documents",
+                "column": "member_id"
+              },
+              {
+                "table": "documents",
+                "column": "visible"
+              },
+              {
+                "table": "documents",
+                "column": "doc_type"
+              },
+              {
+                "table": "documents",
+                "column": "rm_tracking"
+              },
+              {
+                "table": "documents",
+                "column": "created_at"
+              },
+              {
+                "table": "documents",
+                "column": "document_location"
+              }
+            ],
+            "table": {
+              "name": "documents"
+            },
+            "primary": "id",
+            "joins": [],
+            "wheres": {
+              "condition": "AND",
+              "rules": [
+                {
+                  "id": "documents.member_id",
+                  "field": "documents.member_id",
+                  "type": "string",
+                  "operator": "equal",
+                  "value": "{{$_GET.member_id}}",
+                  "data": {
+                    "table": "documents",
+                    "column": "member_id",
+                    "type": "text",
+                    "columnObj": {
+                      "type": "string",
+                      "maxLength": 50,
+                      "primary": false,
+                      "unique": false,
+                      "nullable": true,
+                      "name": "member_id"
+                    }
+                  },
+                  "operation": "="
+                }
+              ],
+              "conditional": null,
+              "valid": true
+            },
+            "orders": [
+              {
+                "table": "documents",
+                "column": "id",
+                "direction": "DESC",
+                "recid": 1
+              }
+            ],
+            "query": "SELECT id, document_name, member_id, visible, doc_type, rm_tracking, created_at, document_location\nFROM documents\nWHERE member_id = :P1 /* {{$_GET.member_id}} */\nORDER BY id DESC",
+            "params": [
+              {
+                "operator": "equal",
+                "type": "expression",
+                "name": ":P1",
+                "value": "{{$_GET.member_id}}"
+              }
+            ]
+          }
+        },
+        "output": true,
+        "meta": [
+          {
+            "name": "offset",
+            "type": "number"
+          },
+          {
+            "name": "limit",
+            "type": "number"
+          },
+          {
+            "name": "total",
+            "type": "number"
+          },
+          {
+            "name": "page",
+            "type": "object",
+            "sub": [
+              {
+                "name": "offset",
+                "type": "object",
+                "sub": [
+                  {
+                    "name": "first",
+                    "type": "number"
+                  },
+                  {
+                    "name": "prev",
+                    "type": "number"
+                  },
+                  {
+                    "name": "next",
+                    "type": "number"
+                  },
+                  {
+                    "name": "last",
+                    "type": "number"
+                  }
+                ]
+              },
+              {
+                "name": "current",
+                "type": "number"
+              },
+              {
+                "name": "total",
+                "type": "number"
+              }
+            ]
+          },
+          {
+            "name": "data",
+            "type": "array",
+            "sub": [
+              {
+                "type": "number",
+                "name": "id"
+              },
+              {
+                "type": "text",
+                "name": "document_name"
+              },
+              {
+                "type": "text",
+                "name": "member_id"
+              },
+              {
+                "type": "text",
+                "name": "visible"
+              },
+              {
+                "type": "text",
+                "name": "doc_type"
+              },
+              {
+                "type": "text",
+                "name": "rm_tracking"
+              },
+              {
+                "type": "datetime",
+                "name": "created_at"
+              },
+              {
+                "type": "text",
+                "name": "document_location"
+              }
+            ]
+          }
+        ],
+        "outputType": "object"
       }
     ]
   }

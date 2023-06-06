@@ -1,0 +1,98 @@
+{
+  "meta": {
+    "options": {
+      "linkedFile": "/views/members-profile.ejs",
+      "linkedForm": "formDelDocuments"
+    },
+    "$_POST": [
+      {
+        "type": "text",
+        "fieldName": "DelDocId",
+        "options": {
+          "rules": {
+            "core:required": {
+              "param": ""
+            }
+          }
+        },
+        "name": "DelDocId"
+      }
+    ]
+  },
+  "exec": {
+    "steps": [
+      {
+        "name": "",
+        "module": "auth",
+        "action": "restrict",
+        "options": {
+          "provider": "security",
+          "permissions": [
+            "write"
+          ],
+          "loginUrl": "/signin",
+          "forbiddenUrl": "/403-forbidden"
+        }
+      },
+      {
+        "name": "updateDel",
+        "module": "dbupdater",
+        "action": "update",
+        "options": {
+          "connection": "DBConnection",
+          "sql": {
+            "type": "update",
+            "values": [
+              {
+                "table": "documents",
+                "column": "visible",
+                "type": "text",
+                "value": "{{'n'}}"
+              }
+            ],
+            "table": "documents",
+            "wheres": {
+              "condition": "AND",
+              "rules": [
+                {
+                  "id": "id",
+                  "field": "id",
+                  "type": "double",
+                  "operator": "equal",
+                  "value": "{{$_POST.DelDocId}}",
+                  "data": {
+                    "column": "id"
+                  },
+                  "operation": "="
+                }
+              ],
+              "conditional": null,
+              "valid": true
+            },
+            "returning": "id",
+            "query": "UPDATE documents\nSET visible = :P1 /* {{'n'}} */\nWHERE id = :P2 /* {{$_POST.DelDocId}} */",
+            "params": [
+              {
+                "name": ":P1",
+                "type": "expression",
+                "value": "{{'n'}}"
+              },
+              {
+                "operator": "equal",
+                "type": "expression",
+                "name": ":P2",
+                "value": "{{$_POST.DelDocId}}"
+              }
+            ]
+          }
+        },
+        "meta": [
+          {
+            "name": "affected",
+            "type": "number"
+          }
+        ]
+      }
+    ]
+  }
+}
