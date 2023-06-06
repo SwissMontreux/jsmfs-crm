@@ -1,0 +1,10 @@
+{
+  "name": "createFolderabc",
+  "module": "fs",
+  "action": "createdir",
+  "options": {
+    "path": "/public/assets/docs/56"
+  },
+  "outputType": "boolean",
+  "output": true
+}

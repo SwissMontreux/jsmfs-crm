@@ -1,0 +1,453 @@
+{
+  "meta": {
+    "options": {
+      "linkedFile": "/views/documents.ejs",
+      "linkedForm": "formAddEditDocuments"
+    },
+    "$_POST": [
+      {
+        "type": "text",
+        "fieldName": "FileName",
+        "options": {
+          "rules": {
+            "core:required": {
+              "param": ""
+            }
+          }
+        },
+        "name": "FileName"
+      },
+      {
+        "type": "file",
+        "fieldName": "docFile",
+        "options": {
+          "rules": {
+            "core:required": {
+              "param": ""
+            }
+          }
+        },
+        "name": "docFile",
+        "sub": [
+          {
+            "type": "text",
+            "name": "name"
+          },
+          {
+            "type": "text",
+            "name": "type"
+          },
+          {
+            "type": "number",
+            "name": "size"
+          },
+          {
+            "type": "text",
+            "name": "error"
+          }
+        ],
+        "outputType": "file"
+      },
+      {
+        "type": "text",
+        "fieldName": "MemberId",
+        "options": {
+          "rules": {
+            "core:required": {
+              "param": ""
+            }
+          }
+        },
+        "name": "MemberId"
+      },
+      {
+        "type": "text",
+        "fieldName": "FileType",
+        "options": {
+          "rules": {
+            "core:required": {
+              "param": ""
+            }
+          }
+        },
+        "name": "FileType"
+      },
+      {
+        "type": "number",
+        "name": "id"
+      }
+    ]
+  },
+  "exec": {
+    "steps": [
+      {
+        "name": "",
+        "module": "auth",
+        "action": "restrict",
+        "options": {
+          "provider": "security",
+          "permissions": [
+            "write"
+          ],
+          "loginUrl": "/signin",
+          "forbiddenUrl": "/403-forbidden"
+        }
+      },
+      {
+        "name": "folderExists",
+        "module": "fs",
+        "action": "direxists",
+        "options": {
+          "path": "{{'/public/assets/docs/'+$_POST.MemberId}}",
+          "then": {
+            "steps": {
+              "name": "checkExistingDoc",
+              "module": "dbconnector",
+              "action": "single",
+              "options": {
+                "connection": "DBConnection",
+                "sql": {
+                  "type": "SELECT",
+                  "columns": [
+                    {
+                      "table": "documents",
+                      "column": "document_location"
+                    }
+                  ],
+                  "table": {
+                    "name": "documents"
+                  },
+                  "primary": "id",
+                  "joins": [],
+                  "wheres": {
+                    "condition": "AND",
+                    "rules": [
+                      {
+                        "id": "documents.member_id",
+                        "field": "documents.member_id",
+                        "type": "string",
+                        "operator": "equal",
+                        "value": "{{$_POST.MemberId}}",
+                        "data": {
+                          "table": "documents",
+                          "column": "member_id",
+                          "type": "text",
+                          "columnObj": {
+                            "type": "string",
+                            "maxLength": 50,
+                            "primary": false,
+                            "unique": false,
+                            "nullable": true,
+                            "name": "member_id"
+                          }
+                        },
+                        "operation": "="
+                      }
+                    ],
+                    "conditional": null,
+                    "valid": true
+                  },
+                  "query": "SELECT document_location\nFROM documents\nWHERE member_id = :P1 /* {{$_POST.MemberId}} */",
+                  "params": [
+                    {
+                      "operator": "equal",
+                      "type": "expression",
+                      "name": ":P1",
+                      "value": "{{$_POST.MemberId}}"
+                    }
+                  ]
+                }
+              },
+              "output": true,
+              "meta": [
+                {
+                  "type": "text",
+                  "name": "document_location"
+                }
+              ],
+              "outputType": "object"
+            }
+          },
+          "else": {
+            "steps": {
+              "name": "createFolder",
+              "module": "fs",
+              "action": "createdir",
+              "options": {
+                "path": "{{'/public/assets/docs/'+$_POST.MemberId}}"
+              },
+              "outputType": "boolean",
+              "output": true
+            }
+          }
+        },
+        "outputType": "boolean",
+        "output": true
+      },
+      {
+        "name": "upload",
+        "module": "upload",
+        "action": "upload",
+        "options": {
+          "path": "{{'/public/assets/docs/'+$_POST.MemberId}}",
+          "overwrite": true,
+          "fields": "{{$_POST.docFile}}",
+          "template": "{name}{_n}{ext}",
+          "replaceSpace": true,
+          "replaceDiacritics": true,
+          "asciiOnly": true
+        },
+        "meta": [
+          {
+            "name": "name",
+            "type": "text"
+          },
+          {
+            "name": "path",
+            "type": "text"
+          },
+          {
+            "name": "url",
+            "type": "text"
+          },
+          {
+            "name": "type",
+            "type": "text"
+          },
+          {
+            "name": "size",
+            "type": "text"
+          },
+          {
+            "name": "error",
+            "type": "number"
+          }
+        ],
+        "outputType": "file",
+        "output": true
+      },
+      {
+        "name": "fileExists",
+        "module": "fs",
+        "action": "exists",
+        "options": {
+          "path": "{{'/public'+checkExistingDoc.document_location}}",
+          "then": {
+            "steps": {
+              "name": "fileRemove",
+              "module": "fs",
+              "action": "remove",
+              "options": {
+                "path": "{{'/public'+checkExistingDoc.document_location}}"
+              },
+              "outputType": "boolean",
+              "output": true
+            }
+          }
+        },
+        "outputType": "boolean",
+        "output": true
+      },
+      {
+        "name": "",
+        "module": "core",
+        "action": "condition",
+        "options": {
+          "if": "{{checkExistingDoc.document_location}}",
+          "then": {
+            "steps": {
+              "name": "update",
+              "module": "dbupdater",
+              "action": "update",
+              "options": {
+                "connection": "DBConnection",
+                "sql": {
+                  "type": "update",
+                  "values": [
+                    {
+                      "table": "documents",
+                      "column": "document_name",
+                      "type": "text",
+                      "value": "{{$_POST.FileName}}"
+                    },
+                    {
+                      "table": "documents",
+                      "column": "member_id",
+                      "type": "text",
+                      "value": "{{$_POST.MemberId}}"
+                    },
+                    {
+                      "table": "documents",
+                      "column": "doc_type",
+                      "type": "text",
+                      "value": "{{$_POST.FileType}}"
+                    },
+                    {
+                      "table": "documents",
+                      "column": "created_at",
+                      "type": "datetime",
+                      "value": "{{NOW}}"
+                    },
+                    {
+                      "table": "documents",
+                      "column": "document_location",
+                      "type": "text",
+                      "value": "{{'/assets/docs/'+$_POST.MemberId+'/'+upload.name}}"
+                    }
+                  ],
+                  "table": "documents",
+                  "wheres": {
+                    "condition": "AND",
+                    "rules": [
+                      {
+                        "id": "member_id",
+                        "field": "member_id",
+                        "type": "string",
+                        "operator": "equal",
+                        "value": "{{$_POST.MemberId}}",
+                        "data": {
+                          "column": "member_id"
+                        },
+                        "operation": "="
+                      }
+                    ],
+                    "conditional": null,
+                    "valid": true
+                  },
+                  "returning": "id",
+                  "query": "UPDATE documents\nSET document_name = :P1 /* {{$_POST.FileName}} */, member_id = :P2 /* {{$_POST.MemberId}} */, doc_type = :P3 /* {{$_POST.FileType}} */, created_at = :P4 /* {{NOW}} */, document_location = :P5 /* {{'/assets/docs/'+$_POST.MemberId+'/'+upload.name}} */\nWHERE member_id = :P6 /* {{$_POST.MemberId}} */",
+                  "params": [
+                    {
+                      "name": ":P1",
+                      "type": "expression",
+                      "value": "{{$_POST.FileName}}"
+                    },
+                    {
+                      "name": ":P2",
+                      "type": "expression",
+                      "value": "{{$_POST.MemberId}}"
+                    },
+                    {
+                      "name": ":P3",
+                      "type": "expression",
+                      "value": "{{$_POST.FileType}}"
+                    },
+                    {
+                      "name": ":P4",
+                      "type": "expression",
+                      "value": "{{NOW}}"
+                    },
+                    {
+                      "name": ":P5",
+                      "type": "expression",
+                      "value": "{{'/assets/docs/'+$_POST.MemberId+'/'+upload.name}}"
+                    },
+                    {
+                      "operator": "equal",
+                      "type": "expression",
+                      "name": ":P6",
+                      "value": "{{$_POST.MemberId}}"
+                    }
+                  ]
+                }
+              },
+              "meta": [
+                {
+                  "name": "affected",
+                  "type": "number"
+                }
+              ]
+            }
+          },
+          "else": {
+            "steps": {
+              "name": "AddDoc",
+              "module": "dbupdater",
+              "action": "insert",
+              "options": {
+                "connection": "DBConnection",
+                "sql": {
+                  "type": "insert",
+                  "values": [
+                    {
+                      "table": "documents",
+                      "column": "document_name",
+                      "type": "text",
+                      "value": "{{$_POST.FileName}}"
+                    },
+                    {
+                      "table": "documents",
+                      "column": "member_id",
+                      "type": "text",
+                      "value": "{{$_POST.MemberId}}"
+                    },
+                    {
+                      "table": "documents",
+                      "column": "doc_type",
+                      "type": "text",
+                      "value": "{{$_POST.FileType}}"
+                    },
+                    {
+                      "table": "documents",
+                      "column": "created_at",
+                      "type": "datetime",
+                      "value": "{{NOW}}"
+                    },
+                    {
+                      "table": "documents",
+                      "column": "document_location",
+                      "type": "text",
+                      "value": "{{'/assets/docs/'+$_POST.MemberId+'/'+upload.name}}"
+                    }
+                  ],
+                  "table": "documents",
+                  "returning": "id",
+                  "query": "INSERT INTO documents\n(document_name, member_id, doc_type, created_at, document_location) VALUES (:P1 /* {{$_POST.FileName}} */, :P2 /* {{$_POST.MemberId}} */, :P3 /* {{$_POST.FileType}} */, :P4 /* {{NOW}} */, :P5 /* {{'/assets/docs/'+$_POST.MemberId+'/'+upload.name}} */)",
+                  "params": [
+                    {
+                      "name": ":P1",
+                      "type": "expression",
+                      "value": "{{$_POST.FileName}}"
+                    },
+                    {
+                      "name": ":P2",
+                      "type": "expression",
+                      "value": "{{$_POST.MemberId}}"
+                    },
+                    {
+                      "name": ":P3",
+                      "type": "expression",
+                      "value": "{{$_POST.FileType}}"
+                    },
+                    {
+                      "name": ":P4",
+                      "type": "expression",
+                      "value": "{{NOW}}"
+                    },
+                    {
+                      "name": ":P5",
+                      "type": "expression",
+                      "value": "{{'/assets/docs/'+$_POST.MemberId+'/'+upload.name}}"
+                    }
+                  ]
+                }
+              },
+              "meta": [
+                {
+                  "name": "identity",
+                  "type": "text"
+                },
+                {
+                  "name": "affected",
+                  "type": "number"
+                }
+              ],
+              "output": true
+            }
+          }
+        },
+        "outputType": "boolean"
+      }
+    ]
+  }
+}
