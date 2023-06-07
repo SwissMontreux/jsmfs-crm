@@ -248,7 +248,8 @@
                     "name": "affected",
                     "type": "number"
                   }
-                ]
+                ],
+                "output": true
               },
               {
                 "name": "Message",
