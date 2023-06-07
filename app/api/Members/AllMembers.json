@@ -89,7 +89,8 @@
               },
               {
                 "table": "members",
-                "column": "town/city"
+                "column": "town/city",
+                "alias": "town"
               },
               {
                 "table": "members",
@@ -113,10 +114,11 @@
               {
                 "table": "members",
                 "column": "id",
-                "direction": "DESC"
+                "direction": "DESC",
+                "recid": 1
               }
             ],
-            "query": "SELECT id, created_at, business_line, member_id, first_name, last_name, company_name, email, telephone, address1, address2, \"town/city\", county, psotcode, country\nFROM members\nORDER BY id DESC",
+            "query": "SELECT id, created_at, business_line, member_id, first_name, last_name, company_name, email, telephone, address1, address2, \"town/city\" AS town, county, psotcode, country\nFROM members\nORDER BY id DESC",
             "params": []
           }
         },
@@ -220,7 +222,7 @@
               },
               {
                 "type": "text",
-                "name": "town/city"
+                "name": "town"
               },
               {
                 "type": "text",

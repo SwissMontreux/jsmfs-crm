@@ -1,0 +1,278 @@
+{
+  "meta": {
+    "options": {
+      "linkedFile": "/views/all-members.ejs",
+      "linkedForm": "scformMembers"
+    },
+    "$_POST": [
+      {
+        "type": "text",
+        "fieldName": "MemberId",
+        "options": {
+          "rules": {
+            "core:required": {
+              "param": ""
+            }
+          }
+        },
+        "name": "MemberId"
+      },
+      {
+        "type": "text",
+        "fieldName": "first_name",
+        "name": "first_name"
+      },
+      {
+        "type": "text",
+        "fieldName": "last_name",
+        "name": "last_name"
+      },
+      {
+        "type": "text",
+        "fieldName": "company_name",
+        "name": "company_name"
+      },
+      {
+        "type": "text",
+        "fieldName": "email",
+        "name": "email"
+      },
+      {
+        "type": "text",
+        "fieldName": "telephone",
+        "name": "telephone"
+      },
+      {
+        "type": "text",
+        "fieldName": "address1",
+        "name": "address1"
+      },
+      {
+        "type": "text",
+        "fieldName": "address2",
+        "name": "address2"
+      },
+      {
+        "type": "text",
+        "fieldName": "town",
+        "name": "town"
+      },
+      {
+        "type": "text",
+        "fieldName": "county",
+        "name": "county"
+      },
+      {
+        "type": "text",
+        "fieldName": "psotcode",
+        "name": "psotcode"
+      },
+      {
+        "type": "text",
+        "fieldName": "business_line",
+        "name": "business_line"
+      },
+      {
+        "type": "text",
+        "name": "country"
+      }
+    ]
+  },
+  "exec": {
+    "steps": [
+      {
+        "name": "",
+        "module": "auth",
+        "action": "restrict",
+        "options": {
+          "provider": "security",
+          "permissions": [
+            "write"
+          ],
+          "loginUrl": "/login",
+          "forbiddenUrl": "/403-forbidden"
+        }
+      },
+      {
+        "name": "upMembers",
+        "module": "dbupdater",
+        "action": "update",
+        "options": {
+          "connection": "DBConnection",
+          "sql": {
+            "type": "update",
+            "values": [
+              {
+                "table": "members",
+                "column": "business_line",
+                "type": "text",
+                "value": "{{$_POST.business_line}}"
+              },
+              {
+                "table": "members",
+                "column": "first_name",
+                "type": "text",
+                "value": "{{$_POST.first_name}}"
+              },
+              {
+                "table": "members",
+                "column": "last_name",
+                "type": "text",
+                "value": "{{$_POST.last_name}}"
+              },
+              {
+                "table": "members",
+                "column": "company_name",
+                "type": "text",
+                "value": "{{$_POST.company_name}}"
+              },
+              {
+                "table": "members",
+                "column": "email",
+                "type": "text",
+                "value": "{{$_POST.email}}"
+              },
+              {
+                "table": "members",
+                "column": "telephone",
+                "type": "text",
+                "value": "{{$_POST.telephone}}"
+              },
+              {
+                "table": "members",
+                "column": "address1",
+                "type": "text",
+                "value": "{{$_POST.address1}}"
+              },
+              {
+                "table": "members",
+                "column": "address2",
+                "type": "text",
+                "value": "{{$_POST.address2}}"
+              },
+              {
+                "table": "members",
+                "column": "town/city",
+                "type": "text",
+                "value": "{{$_POST.town}}"
+              },
+              {
+                "table": "members",
+                "column": "county",
+                "type": "text",
+                "value": "{{$_POST.county}}"
+              },
+              {
+                "table": "members",
+                "column": "psotcode",
+                "type": "text",
+                "value": "{{$_POST.psotcode}}"
+              },
+              {
+                "table": "members",
+                "column": "country",
+                "type": "text",
+                "value": "{{$_POST.country}}"
+              }
+            ],
+            "table": "members",
+            "wheres": {
+              "condition": "AND",
+              "rules": [
+                {
+                  "id": "member_id",
+                  "field": "member_id",
+                  "type": "string",
+                  "operator": "equal",
+                  "value": "{{$_POST.MemberId}}",
+                  "data": {
+                    "column": "member_id"
+                  },
+                  "operation": "="
+                }
+              ],
+              "conditional": null,
+              "valid": true
+            },
+            "returning": "id",
+            "query": "UPDATE members\nSET business_line = :P1 /* {{$_POST.business_line}} */, first_name = :P2 /* {{$_POST.first_name}} */, last_name = :P3 /* {{$_POST.last_name}} */, company_name = :P4 /* {{$_POST.company_name}} */, email = :P5 /* {{$_POST.email}} */, telephone = :P6 /* {{$_POST.telephone}} */, address1 = :P7 /* {{$_POST.address1}} */, address2 = :P8 /* {{$_POST.address2}} */, \"town/city\" = :P9 /* {{$_POST.town}} */, county = :P10 /* {{$_POST.county}} */, psotcode = :P11 /* {{$_POST.psotcode}} */, country = :P12 /* {{$_POST.country}} */\nWHERE member_id = :P13 /* {{$_POST.MemberId}} */",
+            "params": [
+              {
+                "name": ":P1",
+                "type": "expression",
+                "value": "{{$_POST.business_line}}"
+              },
+              {
+                "name": ":P2",
+                "type": "expression",
+                "value": "{{$_POST.first_name}}"
+              },
+              {
+                "name": ":P3",
+                "type": "expression",
+                "value": "{{$_POST.last_name}}"
+              },
+              {
+                "name": ":P4",
+                "type": "expression",
+                "value": "{{$_POST.company_name}}"
+              },
+              {
+                "name": ":P5",
+                "type": "expression",
+                "value": "{{$_POST.email}}"
+              },
+              {
+                "name": ":P6",
+                "type": "expression",
+                "value": "{{$_POST.telephone}}"
+              },
+              {
+                "name": ":P7",
+                "type": "expression",
+                "value": "{{$_POST.address1}}"
+              },
+              {
+                "name": ":P8",
+                "type": "expression",
+                "value": "{{$_POST.address2}}"
+              },
+              {
+                "name": ":P9",
+                "type": "expression",
+                "value": "{{$_POST.town}}"
+              },
+              {
+                "name": ":P10",
+                "type": "expression",
+                "value": "{{$_POST.county}}"
+              },
+              {
+                "name": ":P11",
+                "type": "expression",
+                "value": "{{$_POST.psotcode}}"
+              },
+              {
+                "name": ":P12",
+                "type": "expression",
+                "value": "{{$_POST.country}}"
+              },
+              {
+                "operator": "equal",
+                "type": "expression",
+                "name": ":P13",
+                "value": "{{$_POST.MemberId}}"
+              }
+            ]
+          }
+        },
+        "meta": [
+          {
+            "name": "affected",
+            "type": "number"
+          }
+        ]
+      }
+    ]
+  }
+}

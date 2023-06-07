@@ -6,18 +6,6 @@
     },
     "$_POST": [
       {
-        "type": "text",
-        "fieldName": "FileName",
-        "options": {
-          "rules": {
-            "core:required": {
-              "param": ""
-            }
-          }
-        },
-        "name": "FileName"
-      },
-      {
         "type": "file",
         "fieldName": "docFile",
         "options": {
@@ -246,7 +234,7 @@
                       "table": "documents",
                       "column": "document_name",
                       "type": "text",
-                      "value": "{{$_POST.FileName}}"
+                      "value": "{{upload.name}}"
                     },
                     {
                       "table": "documents",
@@ -281,12 +269,12 @@
                   ],
                   "table": "documents",
                   "returning": "id",
-                  "query": "INSERT INTO documents\n(document_name, member_id, doc_type, created_at, document_location, visible) VALUES (:P1 /* {{$_POST.FileName}} */, :P2 /* {{$_POST.MemberId}} */, :P3 /* {{$_POST.FileType}} */, :P4 /* {{NOW}} */, :P5 /* {{'/assets/docs/'+$_POST.MemberId+'/'+upload.name}} */, :P6 /* {{'y'}} */)",
+                  "query": "INSERT INTO documents\n(document_name, member_id, doc_type, created_at, document_location, visible) VALUES (:P1 /* {{upload.name}} */, :P2 /* {{$_POST.MemberId}} */, :P3 /* {{$_POST.FileType}} */, :P4 /* {{NOW}} */, :P5 /* {{'/assets/docs/'+$_POST.MemberId+'/'+upload.name}} */, :P6 /* {{'y'}} */)",
                   "params": [
                     {
                       "name": ":P1",
                       "type": "expression",
-                      "value": "{{$_POST.FileName}}"
+                      "value": "{{upload.name}}"
                     },
                     {
                       "name": ":P2",
