@@ -168,6 +168,28 @@
           "else": {
             "steps": [
               {
+                "name": "validate",
+                "module": "validator",
+                "action": "validate",
+                "options": {
+                  "data": [
+                    {
+                      "name": "validate_1",
+                      "value": "{{$_POST.perk_id}}",
+                      "rules": {
+                        "db:notexists": {
+                          "param": {
+                            "connection": "DBConnection",
+                            "table": "perks",
+                            "column": "perk_id"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              {
                 "name": "AddPerks",
                 "module": "dbupdater",
                 "action": "insert",
