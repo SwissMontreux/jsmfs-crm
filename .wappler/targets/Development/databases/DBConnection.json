@@ -560,14 +560,6 @@
               "unique": false,
               "nullable": true
             }
-          },
-          "cat_id": {
-            "db": {
-              "type": "integer",
-              "primary": false,
-              "unique": false,
-              "nullable": true
-            }
           }
         }
       },
