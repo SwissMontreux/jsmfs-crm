@@ -11,7 +11,7 @@
             <thead>
                 <tr>
                     <th class="sorting" dmx-on:click="qm.set('sort','$index+1');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='$index+1' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='$index+1' && qm.data.dir == 'desc'">Sl. No.</th>
-                    <td class="sorting">Details</td>
+                    <th class="sorting">Details</th>
                     <th class="sorting" dmx-on:click="qm.set('sort','created_at');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='created_at' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='created_at' && qm.data.dir == 'desc'">Created at</th>
                     <th class="sorting" dmx-on:click="qm.set('sort','business_line');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='business_line' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='business_line' && qm.data.dir == 'desc'">Business line</th>
                     <th class="sorting" dmx-on:click="qm.set('sort','member_id');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='member_id' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='member_id' && qm.data.dir == 'desc'">Member</th>
@@ -26,7 +26,7 @@
                     <th class="sorting" dmx-on:click="qm.set('sort','county');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='county' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='county' && qm.data.dir == 'desc'">County</th>
                     <th class="sorting" dmx-on:click="qm.set('sort','psotcode');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='psotcode' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='psotcode' && qm.data.dir == 'desc'">Psotcode</th>
                     <th class="sorting" dmx-on:click="qm.set('sort','country');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='country' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='country' && qm.data.dir == 'desc'">Country</th>
-                    <td class="sorting">Action</td>
+                    <th class="sorting">Action</th>
                 </tr>
             </thead>
             <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="dvAllMembers.data" id="tableRepeat2" dmx-state="qm" dmx-sort="sort" dmx-order="dir" key="id">
@@ -50,20 +50,20 @@
                     <td dmx-text="psotcode"></td>
                     <td dmx-text="country"></td>
                     <td class="text-center">
-                        <a href="#" class="text-black" data-bs-toggle="modal" data-bs-target="#MemberEditModal" dmx-on:click="ddMemberDetails.select(id);MemberEditModal.show()"><i class="fa fa-pencil-alt"></i></a>
+                        <a href="#" class="text-black" data-toggle="modal" data-target="#MemberEditModal" dmx-on:click="ddMemberDetails.select(id);MemberEditModal.show()"><i class="fa fa-pencil-alt"></i></a>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
 </div>
-<div class="modal fade" id="MemberEditModal" tabindex="-1" role="dialog" aria-labelledby="MemberEditModal" aria-hidden="true" is="dmx-bs5-modal">
-    <div class="modal-dialog modal-lg" role="document">
+<div class="modal fade" id="MemberEditModal" tabindex="-1" role="dialog" aria-labelledby="MemberEditModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <form is="dmx-serverconnect-form" id="scformMembers" method="post" action="/api/Members/EditMember" dmx-generator="bootstrap5" dmx-form-type="horizontal" dmx-on:success="scAllMembers.load({limit: 10000},true);notifies1.success('Member Details Updated Successfully');" dmx-on:invalid="notifies1.warning(lastError.response)" dmx-on:forbidden="notifies1.warning(lastError.response)" dmx-on:unauthorized="notifies1.warning(lastError.response)" dmx-on:error="notifies1.warning(lastError.response)">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="DelModalTitle">Edit Member Info.</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" dmx-on:close="scformMembers.reset(true);">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" dmx-on:click="scformMembers.reset(true);">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -149,7 +149,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-pill" data-dismiss="modal" dmx-on:click="scformMembers.reset(true);MemberEditModal.hide()">Close</button>
+                    <button type="button" class="btn btn-secondary btn-pill" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-success btn-pill">Update</button>
                 </div>
             </div>

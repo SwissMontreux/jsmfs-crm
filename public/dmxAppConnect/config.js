@@ -468,6 +468,27 @@ dmx.config({
         }
       ],
       "outputType": "array"
+    },
+    "ddPerks": {
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "text",
+          "name": "perk_id"
+        },
+        {
+          "type": "text",
+          "name": "perk_name"
+        },
+        {
+          "type": "text",
+          "name": "category"
+        }
+      ],
+      "outputType": "array"
     }
   },
   "allmembers": {

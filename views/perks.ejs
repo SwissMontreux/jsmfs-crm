@@ -4,8 +4,12 @@
 <!-- <dmx-serverconnect id="scPerksCategory" url="/api/Perks/PerksByCate" dmx-on:success="scPerks.load({category: content.scPerksCategory.data.PerksCategory[$index].category},true)"></dmx-serverconnect> -->
 <dmx-serverconnect id="scPerks" url="/api/Perks/Perks" dmx-param:offset="qm.data.offset" dmx-param:limit="qm.data.limit" dmx-param:sort="qm.data.sort" dmx-param:dir="qm.data.dir" dmx-on:success="varTitle.setValue('Perks')"></dmx-serverconnect>
 <dmx-data-view id="dvPerks" dmx-bind:data="scPerks.data.queryParks.data" filter="(perk_name.lowercase().contains(Search.searchinput.value.lowercase())||perk_id.lowercase().contains(Search.searchinput.value.lowercase())||category.lowercase().contains(Search.searchinput.value.lowercase()))"></dmx-data-view>
+<dmx-data-detail id="ddPerks" dmx-bind:data="content.dvPerks.data" key="id"></dmx-data-detail>
 <div class="col">
     <div class="table-responsive">
+        <div class="col text-right py-3">
+            <button type="button" class="btn btn-danger btn-pill py-0" data-toggle="modal" data-target="#ModalAddEdit" dmx-on:click="ddPerks.select(0);"><i class="fa fa-check-circle"></i> Add Perks</button>
+        </div>
         <table class="table table-striped table-bordered table-hover table-sm">
             <thead>
                 <tr>
@@ -13,6 +17,7 @@
                     <th class="sorting" dmx-on:click="qm.set('sort','perk_id');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='perk_id' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='perk_id' && qm.data.dir == 'desc'">Perk</th>
                     <th class="sorting" dmx-on:click="qm.set('sort','perk_name');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='perk_name' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='perk_name' && qm.data.dir == 'desc'">Perk name</th>
                     <th class="sorting" dmx-on:click="qm.set('sort','category');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='category' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='category' && qm.data.dir == 'desc'">Perk Category</th>
+                    <th class="sorting">Action</th>
                 </tr>
             </thead>
             <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="dvPerks.data" id="tableRepeat1" dmx-state="qm" dmx-sort="sort" dmx-order="dir">
@@ -21,9 +26,53 @@
                     <td dmx-text="perk_id"></td>
                     <td dmx-text="perk_name"></td>
                     <td dmx-text="category"></td>
+                    <td class="text-center">
+                        <a href="#" class="text-black" data-toggle="modal" data-target="#ModalAddEdit" dmx-on:click="ddPerks.select(id);ModalAddEdit.show()"><i class="fa fa-pencil-alt"></i></a>
+                    </td>
                 </tr>
             </tbody>
         </table>
     </div>
 
+</div>
+<div class="modal fade" id="ModalAddEdit" tabindex="-1" role="dialog" aria-labelledby="ModalAddEdit" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <form id="formPerksAddEdit" method="post" is="dmx-serverconnect-form" action="/api/Perks/AddEditPerks" dmx-on:success="formPerksAddEdit.reset(true);scPerks.load({limit: 10000},true);notifies1.success(ddPerks.data.id?'Perks Updated Successfully':'A New Perks Added Successfully');ModalAddEdit.hide()" dmx-on:invalid="notifies1.warning(lastError.response)" dmx-on:forbidden="notifies1.warning(lastError.response)" dmx-on:unauthorized="notifies1.warning(lastError.response)" dmx-on:error="notifies1.warning(lastError.response)">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="DelModalTitle">{{ddPerks.data.id?'Edit Perks':'Add Perks'}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" dmx-on:click="ddPerks.select(0);formPerksAddEdit.reset(true);">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <input type="hidden" class="form-control" id="PerkTableId" name="PerkTableId" dmx-bind:value="ddPerks.data.id">
+                        <div class="mb-3 col-12 col-md-6">
+                            <label for="inp_perks_id" class="col-form-label">Perks Id</label>
+                            <div class="col-sm-12 px-0">
+                                <input type="text" class="form-control" id="inp_perks_id" name="perk_id" aria-describedby="inp_perks_id_help" placeholder="Enter Perk Id" dmx-bind:value="content.ddPerks.data.perk_id" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 col-12 col-md-6">
+                            <label for="inp_perks_name" class=" col-form-label">Perks name</label>
+                            <div class="col-sm-12 px-0">
+                                <input type="text" class="form-control" id="inp_perks_name" name="perk_name" aria-describedby="inp_perks_name_help" placeholder="Enter Perk name" dmx-bind:value="ddPerks.data.perk_name" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 col-12 col-md-6">
+                            <label for="inp_perks_category" class=" col-form-label">Perks Category</label>
+                            <div class="col-sm-12 px-0">
+                                <input type="text" class="form-control" id="inp_perks_category" name="category" aria-describedby="inp_perks_category_help" placeholder="Enter Category" dmx-bind:value="ddPerks.data.category" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-pill" data-dismiss="modal" data-dismiss="modal" dmx-on:click="ddPerks.select(0);formPerksAddEdit.reset(true);">Close</button>
+                    <button type="submit" class="btn btn-success btn-pill">{{ddPerks.data.id?'Update':'Submit'}}</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
