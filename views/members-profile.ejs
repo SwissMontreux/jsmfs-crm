@@ -226,7 +226,9 @@
                                         <td dmx-text="doc_type"></td>
                                         <td dmx-text="created_at.formatDate('yyyy-MMM-dd hh:mm A')"></td>
                                         <td dmx-text="admin_fname+' '+admin_lname"></td>
-                                        <td><a href="#" dmx-bind:href="document_location" target="_blank"><img src="/assets/images/pdf.jpg" width="20"></a></td>
+                                        <td>
+                                            <a href="#" dmx-bind:href="document_location" target="_blank"><img src="/assets/images/pdf.jpg" width="20"></a>
+                                        </td>
                                         <td class="text-center">
                                             <button type="button" class="btn btn-warning btn-pill py-0" data-toggle="modal" data-target="#ModalDeleteDoc" dmx-on:click="ddDocumentDetails.select(id);ModalDeleteDoc.show()"><i class="fa fa-trash-alt"></i></button>
                                         </td>
