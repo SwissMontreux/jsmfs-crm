@@ -3,39 +3,41 @@
 <dmx-query-manager id="qm"></dmx-query-manager>
 <dmx-serverconnect id="scDocuments" dmx-param:offset="content.qm.data.offset" dmx-param:limit="10000" dmx-param:sort="content.qm.data.sort" dmx-param:dir="content.qm.data.dir" dmx-on:success="varTitle.setValue('Documents')" url="/api/Documents/Document"></dmx-serverconnect>
 <dmx-data-view id="dvDocuments" dmx-bind:data="content.scDocuments.data.query.data" filter="(created_at.lowercase().contains(Search.searchinput.value.lowercase())||document_id.lowercase().contains(Search.searchinput.value.lowercase())||document_name.lowercase().contains(Search.searchinput.value.lowercase())||member_id.lowercase().contains(Search.searchinput.value.lowercase())||first_name.lowercase().contains(Search.searchinput.value.lowercase())||doc_type.lowercase().contains(Search.searchinput.value.lowercase())||last_name.lowercase().contains(Search.searchinput.value.lowercase()))"></dmx-data-view>
+<dmx-data-detail id="ddDocumentDetails" dmx-bind:data="dvDocuments.data" key="id"></dmx-data-detail>
 <dmx-serverconnect id="scAllMembers" noload url="/api/Members/AllMembers"></dmx-serverconnect>
 <div class="col">
     <div class="table-responsive">
         <div class="col text-right py-3">
-            <button type="button" class="btn btn-danger btn-pill py-0" data-toggle="modal" data-target="#ModalAddEdit" dmx-on:click="scAllMembers.load({limit: 10000},true)">Add Document</button>
+            <button type="button" class="btn btn-danger btn-pill py-0" data-toggle="modal" data-target="#ModalAddEdit" dmx-on:click="scAllMembers.load({limit: 10000},true)"><i class="fa fa-file-pdf"></i> Add Document</button>
         </div>
         <table class="table table-striped table-bordered table-hover table-sm">
             <thead>
                 <tr>
                     <th class="sorting" dmx-on:click="qm.set('sort','$index+1');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='$index+1' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='$index+1' && qm.data.dir == 'desc'">Sl. No.</th>
                     <th class="sorting" dmx-on:click="qm.set('sort','document_name');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='document_name' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='document_name' && qm.data.dir == 'desc'">Document Name</th>
+                    <th class="sorting" dmx-on:click="qm.set('sort','visible');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='visible' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='visible' && qm.data.dir == 'desc'">Visible</th>
                     <th class="sorting" dmx-on:click="qm.set('sort','doc_type');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='doc_type' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='doc_type' && qm.data.dir == 'desc'">Type</th>
                     <th class="sorting" dmx-on:click="qm.set('sort','first_name');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='first_name' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='first_name' && qm.data.dir == 'desc'">First Name</th>
                     <th class="sorting" dmx-on:click="qm.set('sort','last_name');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='last_name' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='last_name' && qm.data.dir == 'desc'">Last Name</th>
                     <th class="sorting" dmx-on:click="qm.set('sort','created_at');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='created_at' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='created_at' && qm.data.dir == 'desc'">Created At</th>
+                    <th>Created By</th>
                     <th class="sorting" dmx-on:click="qm.set('sort','document_location');qm.set('dir',qm.data.dir == 'desc' ? 'asc' : 'desc')" dmx-class:sorting_asc="qm.data.sort=='document_location' && qm.data.dir == 'asc'" dmx-class:sorting_desc="qm.data.sort=='document_location' && qm.data.dir == 'desc'">Document location</th>
-                    <th class="sorting">Action</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody is="dmx-repeat" dmx-generator="bs5table" dmx-bind:repeat="dvDocuments.data" id="tableRepeat1" dmx-state="qm" dmx-sort="sort" dmx-order="dir">
                 <tr>
                     <td dmx-text="$index+1"></td>
-                    <!-- <td class="text-center">
-                        <button type="button" class="btn btn-danger btn-pill py-0" data-toggle="modal" data-target="#ModalAddEdit"><i class="mdi mdi-pencil-lock"></i></button>
-                    </td> -->
                     <td dmx-text="document_name"></td>
+                    <td dmx-text="visible"></td>
                     <td dmx-text="doc_type"></td>
                     <td dmx-text="first_name"></td>
                     <td dmx-text="last_name"></td>
                     <td dmx-text="created_at.formatDate('yyyy-MMM-dd hh:mm A')"></td>
+                    <td dmx-text="admin_fname+' '+admin_lname"></td>
                     <td><a href="#" dmx-bind:href="document_location" target="_blank"><img src="/assets/images/pdf.jpg" width="20"></a></td>
                     <td class="text-center">
-                        <button type="button" class="btn btn-warning btn-pill py-0"><i class="mdi mdi-remove"></i></button>
+                        <button type="button" class="btn btn-warning btn-pill py-0" data-toggle="modal" data-target="#ModalDeleteDoc" dmx-on:click="ddDocumentDetails.select(id);ModalDeleteDoc.show()"><i class="fa fa-trash-alt"></i></button>
                     </td>
                 </tr>
             </tbody>
@@ -73,13 +75,6 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="FileName" class="col-sm-5 col-lg-3 col-form-label">File Name</label>
-                            <div class="col-sm-7 col-lg-9">
-                                <input type="text" class="form-control" id="FileName" name="FileName" required>
-                                <span class="d-block ">Enter the file name of the document</span>
-                            </div>
-                        </div>
-                        <div class="form-group row">
                             <label for="docFile" class="col-sm-5 col-lg-3 col-form-label">Document File</label>
                             <div class="col-sm-7 col-lg-9">
                                 <div class="custom-file mb-1">
@@ -98,5 +93,29 @@
                 </div>
             </form>
         </div>
+    </div>
+</div>
+<div class="modal fade" id="ModalDeleteDoc" tabindex="-1" role="dialog" aria-labelledby="ModalDeleteDoc" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <form id="formDelDocuments" method="post" is="dmx-serverconnect-form" action="/api/Documents/DeleteDocs" dmx-on:success="formDelDocuments.reset(true);scDocuments.load({limit: 10000},true);notifies1.success('File Deleted Successfully');ModalDeleteDoc.hide()" dmx-on:invalid="notifies1.warning(lastError.response)" dmx-on:forbidden="notifies1.warning(lastError.response)" dmx-on:unauthorized="notifies1.warning(lastError.response)" dmx-on:error="notifies1.warning(lastError.response)">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="DelModalTitle">Document Remove</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" dmx-on:close="formDelDocuments.reset(true);">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <input type="hidden" class="form-control" id="DelDocId" name="DelDocId" required dmx-bind:value="ddDocumentDetails.data.id">
+                        <h6>Do you want to delete the document?</h6>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-pill" data-dismiss="modal" dmx-on:click="formDelDocuments.reset(true);ModalDeleteDoc.hide()">No</button>
+                    <button type="submit" class="btn btn-primary btn-pill">Yes</button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>

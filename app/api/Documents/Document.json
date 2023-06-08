@@ -43,6 +43,10 @@
             },
             {
               "table": "documents",
+              "column": "visible"
+            },
+            {
+              "table": "documents",
               "column": "member_id"
             },
             {
@@ -64,6 +68,16 @@
             {
               "table": "memb",
               "column": "last_name"
+            },
+            {
+              "table": "mu",
+              "column": "user_fname",
+              "alias": "admin_fname"
+            },
+            {
+              "table": "mu",
+              "column": "user_lname",
+              "alias": "admin_lname"
             }
           ],
           "table": {
@@ -91,16 +105,39 @@
                 ]
               },
               "primary": "id"
+            },
+            {
+              "table": "m_users",
+              "column": "*",
+              "alias": "mu",
+              "type": "LEFT",
+              "clauses": {
+                "condition": "AND",
+                "rules": [
+                  {
+                    "table": "mu",
+                    "column": "id",
+                    "operator": "equal",
+                    "value": {
+                      "table": "documents",
+                      "column": "created_by"
+                    },
+                    "operation": "="
+                  }
+                ]
+              },
+              "primary": "id"
             }
           ],
           "orders": [
             {
               "table": "documents",
               "column": "id",
-              "direction": "DESC"
+              "direction": "DESC",
+              "recid": 1
             }
           ],
-          "query": "SELECT documents.id, documents.document_id, documents.document_name, documents.member_id, documents.doc_type, documents.created_at, documents.document_location, memb.first_name, memb.last_name\nFROM documents\nLEFT JOIN members AS memb ON (memb.member_id = documents.member_id)\nORDER BY documents.id DESC",
+          "query": "SELECT documents.id, documents.document_id, documents.document_name, documents.visible, documents.member_id, documents.doc_type, documents.created_at, documents.document_location, memb.first_name, memb.last_name, mu.user_fname AS admin_fname, mu.user_lname AS admin_lname\nFROM documents\nLEFT JOIN members AS memb ON (memb.member_id = documents.member_id) LEFT JOIN m_users AS mu ON (mu.id = documents.created_by)\nORDER BY documents.id DESC",
           "params": [],
           "primary": "id"
         }
@@ -173,6 +210,10 @@
             },
             {
               "type": "text",
+              "name": "visible"
+            },
+            {
+              "type": "text",
               "name": "member_id"
             },
             {
@@ -194,6 +235,14 @@
             {
               "type": "text",
               "name": "last_name"
+            },
+            {
+              "type": "text",
+              "name": "admin_fname"
+            },
+            {
+              "type": "text",
+              "name": "admin_lname"
             }
           ]
         }

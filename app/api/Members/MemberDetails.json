@@ -537,13 +537,46 @@
               {
                 "table": "documents",
                 "column": "document_location"
+              },
+              {
+                "table": "mu",
+                "column": "user_fname",
+                "alias": "admin_fname"
+              },
+              {
+                "table": "mu",
+                "column": "user_lname",
+                "alias": "admin_lname"
               }
             ],
             "table": {
               "name": "documents"
             },
             "primary": "id",
-            "joins": [],
+            "joins": [
+              {
+                "table": "m_users",
+                "column": "*",
+                "alias": "mu",
+                "type": "LEFT",
+                "clauses": {
+                  "condition": "AND",
+                  "rules": [
+                    {
+                      "table": "mu",
+                      "column": "id",
+                      "operator": "equal",
+                      "value": {
+                        "table": "documents",
+                        "column": "created_by"
+                      },
+                      "operation": "="
+                    }
+                  ]
+                },
+                "primary": "id"
+              }
+            ],
             "wheres": {
               "condition": "AND",
               "rules": [
@@ -580,7 +613,7 @@
                 "recid": 1
               }
             ],
-            "query": "SELECT id, document_name, member_id, visible, doc_type, rm_tracking, created_at, document_location\nFROM documents\nWHERE member_id = :P1 /* {{$_GET.member_id}} */\nORDER BY id DESC",
+            "query": "SELECT documents.id, documents.document_name, documents.member_id, documents.visible, documents.doc_type, documents.rm_tracking, documents.created_at, documents.document_location, mu.user_fname AS admin_fname, mu.user_lname AS admin_lname\nFROM documents\nLEFT JOIN m_users AS mu ON (mu.id = documents.created_by)\nWHERE documents.member_id = :P1 /* {{$_GET.member_id}} */\nORDER BY documents.id DESC",
             "params": [
               {
                 "operator": "equal",
@@ -676,6 +709,14 @@
               {
                 "type": "text",
                 "name": "document_location"
+              },
+              {
+                "type": "text",
+                "name": "admin_fname"
+              },
+              {
+                "type": "text",
+                "name": "admin_lname"
               }
             ]
           }

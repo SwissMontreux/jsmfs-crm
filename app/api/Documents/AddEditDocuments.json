@@ -82,6 +82,16 @@
         }
       },
       {
+        "name": "identity",
+        "module": "auth",
+        "action": "identify",
+        "options": {
+          "provider": "security"
+        },
+        "output": false,
+        "meta": []
+      },
+      {
         "name": "folderExists",
         "module": "fs",
         "action": "direxists",
@@ -265,11 +275,17 @@
                       "column": "visible",
                       "type": "text",
                       "value": "{{'y'}}"
+                    },
+                    {
+                      "table": "documents",
+                      "column": "created_by",
+                      "type": "number",
+                      "value": "{{identity}}"
                     }
                   ],
                   "table": "documents",
                   "returning": "id",
-                  "query": "INSERT INTO documents\n(document_name, member_id, doc_type, created_at, document_location, visible) VALUES (:P1 /* {{upload.name}} */, :P2 /* {{$_POST.MemberId}} */, :P3 /* {{$_POST.FileType}} */, :P4 /* {{NOW}} */, :P5 /* {{'/assets/docs/'+$_POST.MemberId+'/'+upload.name}} */, :P6 /* {{'y'}} */)",
+                  "query": "INSERT INTO documents\n(document_name, member_id, doc_type, created_at, document_location, visible, created_by) VALUES (:P1 /* {{upload.name}} */, :P2 /* {{$_POST.MemberId}} */, :P3 /* {{$_POST.FileType}} */, :P4 /* {{NOW}} */, :P5 /* {{'/assets/docs/'+$_POST.MemberId+'/'+upload.name}} */, :P6 /* {{'y'}} */, :P7 /* {{identity}} */)",
                   "params": [
                     {
                       "name": ":P1",
@@ -300,6 +316,11 @@
                       "name": ":P6",
                       "type": "expression",
                       "value": "{{'y'}}"
+                    },
+                    {
+                      "name": ":P7",
+                      "type": "expression",
+                      "value": "{{identity}}"
                     }
                   ]
                 }

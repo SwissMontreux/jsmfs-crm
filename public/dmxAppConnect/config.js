@@ -797,6 +797,67 @@ dmx.config({
         }
       ],
       "outputType": "array"
+    },
+    "ddMemberDetails": {
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "datetime",
+          "name": "created_at"
+        },
+        {
+          "type": "text",
+          "name": "member_id"
+        },
+        {
+          "type": "text",
+          "name": "first_name"
+        },
+        {
+          "type": "text",
+          "name": "last_name"
+        },
+        {
+          "type": "text",
+          "name": "company_name"
+        },
+        {
+          "type": "text",
+          "name": "email"
+        },
+        {
+          "type": "text",
+          "name": "telephone"
+        },
+        {
+          "type": "text",
+          "name": "address1"
+        },
+        {
+          "type": "text",
+          "name": "address2"
+        },
+        {
+          "type": "text",
+          "name": "town/city"
+        },
+        {
+          "type": "text",
+          "name": "county"
+        },
+        {
+          "type": "text",
+          "name": "psotcode"
+        },
+        {
+          "type": "text",
+          "name": "country"
+        }
+      ],
+      "outputType": "array"
     }
   },
   "jsmembers": {
@@ -819,6 +880,67 @@ dmx.config({
       }
     ],
     "dvJsMembers": {
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "datetime",
+          "name": "created_at"
+        },
+        {
+          "type": "text",
+          "name": "member_id"
+        },
+        {
+          "type": "text",
+          "name": "first_name"
+        },
+        {
+          "type": "text",
+          "name": "last_name"
+        },
+        {
+          "type": "text",
+          "name": "company_name"
+        },
+        {
+          "type": "text",
+          "name": "email"
+        },
+        {
+          "type": "text",
+          "name": "telephone"
+        },
+        {
+          "type": "text",
+          "name": "address1"
+        },
+        {
+          "type": "text",
+          "name": "address2"
+        },
+        {
+          "type": "text",
+          "name": "town/city"
+        },
+        {
+          "type": "text",
+          "name": "county"
+        },
+        {
+          "type": "text",
+          "name": "psotcode"
+        },
+        {
+          "type": "text",
+          "name": "country"
+        }
+      ],
+      "outputType": "array"
+    },
+    "ddMemberDetails": {
       "meta": [
         {
           "type": "number",
@@ -940,6 +1062,47 @@ dmx.config({
         {
           "type": "text",
           "name": "document_location"
+        }
+      ],
+      "outputType": "array"
+    },
+    "ddDocumentDetails": {
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "text",
+          "name": "document_id"
+        },
+        {
+          "type": "text",
+          "name": "document_name"
+        },
+        {
+          "type": "text",
+          "name": "member_id"
+        },
+        {
+          "type": "text",
+          "name": "doc_type"
+        },
+        {
+          "type": "datetime",
+          "name": "created_at"
+        },
+        {
+          "type": "text",
+          "name": "document_location"
+        },
+        {
+          "type": "text",
+          "name": "first_name"
+        },
+        {
+          "type": "text",
+          "name": "last_name"
         }
       ],
       "outputType": "array"
