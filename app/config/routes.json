@@ -69,7 +69,8 @@
     {
       "path": "/user-account-settings",
       "page": "user-account-settings",
-      "layout": "main"
+      "layout": "main",
+      "name": "Settings"
     },
     {
       "path": "/members-profile/:id/:member",
@@ -77,11 +78,11 @@
       "layout": "main"
     },
     {
-      "path": "*",
+      "path": "/404",
       "page": "404"
     },
     {
-      "path": "/404",
+      "path": "*",
       "page": "404"
     }
   ],
