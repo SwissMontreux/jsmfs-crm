@@ -1310,5 +1310,25 @@ dmx.config({
       ],
       "outputType": "array"
     }
+  },
+  "useraccountsettings": {
+    "query": [
+      {
+        "type": "text",
+        "name": "offset"
+      },
+      {
+        "type": "text",
+        "name": "limit"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      },
+      {
+        "type": "text",
+        "name": "sort"
+      }
+    ]
   }
 });

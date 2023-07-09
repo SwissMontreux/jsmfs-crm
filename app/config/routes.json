@@ -75,6 +75,14 @@
       "path": "/members-profile/:id/:member",
       "page": "members-profile",
       "layout": "main"
+    },
+    {
+      "path": "*",
+      "page": "404"
+    },
+    {
+      "path": "/404",
+      "page": "404"
     }
   ],
   "layouts": {

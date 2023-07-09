@@ -58,5 +58,9 @@
   "members-profile.ejs": {
     "layoutPage": "main",
     "description": ""
+  },
+  "404.ejs": {
+    "layoutPage": "",
+    "description": ""
   }
 }
